@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	{{a}}<br>
+	{% for v in b %} <!-- : scriptlet -->
+	    {{ v }}<br>
+	{% endfor %}
+	
+	<table border='1'>
+		<tr>
+			<th>아이디</th>
+			<th>이름</th>
+			<th>성별</th>
+			<th>주소</th>
+		</tr>
+	{% for v in c %}
+	    <tr>
+	    	<td>{{v.e_id}}</td>
+	    	<td>{{v.e_name}}</td>
+	    	<td>{{v.e_gender}}</td>
+	    	<td>{{v.addr}}</td>
+    	</tr>	
+	{% endfor %}
+	</table>
+	
+</body>
+</html>
