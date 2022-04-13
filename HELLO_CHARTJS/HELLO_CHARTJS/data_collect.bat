@@ -1,1 +1,0 @@
-python data_collect.py
