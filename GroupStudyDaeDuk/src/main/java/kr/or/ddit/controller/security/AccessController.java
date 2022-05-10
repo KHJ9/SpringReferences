@@ -1,4 +1,4 @@
-package kr.or.ddit.controller;
+package kr.or.ddit.controller.security;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,10 +7,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * AccessController
+ * 
+ * @author Kim Hyun Jun
+ * @version 1.0
+ * @see ""
+ */
 @Slf4j
 @Controller
 @RequestMapping("/fbi")
-public class LogAuthController {
+public class AccessController {
 
 	@GetMapping("/all")
 	public String getAll(Model model) {

@@ -1,4 +1,4 @@
-package kr.or.ddit.controller;
+package kr.or.ddit.controller.security;
 
 import java.util.Enumeration;
 
@@ -11,6 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * LoginOutController
+ * 
+ * @author Kim Hyun Jun
+ * @version 1.0
+ * @see ""
+ */
 @Slf4j
 @Controller
 public class LoginOutController {

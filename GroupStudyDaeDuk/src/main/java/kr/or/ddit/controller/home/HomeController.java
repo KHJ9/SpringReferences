@@ -1,4 +1,4 @@
-package kr.or.ddit.controller;
+package kr.or.ddit.controller.home;
 
 import java.text.DateFormat;
 import java.util.Date;
