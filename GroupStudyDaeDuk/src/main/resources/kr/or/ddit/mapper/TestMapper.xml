@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.TestMapper">
+
+	<!-- mybatis 전용 xml을 만들어주는 프로그램을 설치한다. mybatipse -->
+
+	<select id="getBuyer" parameterType="String" resultType="String">
+		<!-- 보통 어떤 구문에 오류가 있을 지 모르기 때문에 '전체 쿼리'를 감싸주도록 한다. -->
+		<![CDATA[
+			SELECT BUYER_NAME 
+			FROM BUYER 
+			WHERE 1 <= 1
+			AND BUYER_ID = '${buyer_id}'
+		]]>
+	</select>
+	<insert id="insertSimple">
+		INSERT INTO SIMPLE 
+		VALUES(1,'흥')
+	</insert>
+	<update id="updateSimple">
+		UPDATE SIMPLE 
+		SET SM_NAME = '치' 
+		WHERE SM_ID = 1
+	</update>
+	<delete id="deleteSimple">
+		DELETE FROM SIMPLE
+	</delete>
+</mapper>

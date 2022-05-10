@@ -1,4 +1,4 @@
-package kr.or.ddit.controller.chat;
+package kr.or.ddit.chat;
 
 import java.util.ArrayList;
 import java.util.List;

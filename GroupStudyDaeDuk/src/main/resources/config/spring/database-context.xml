@@ -40,6 +40,6 @@
 	<!-- <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean> -->
 	
 	<!-- mapper가 모여있는 패키지명을 선언함, mapper검색을 빠르게 할 수 있다. -->
-	<mybatis-spring:scan base-package="kr.or.blue.mapper"/>
+	<mybatis-spring:scan base-package="kr.or.ddit.mapper"/>
 
 </beans>

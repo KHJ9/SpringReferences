@@ -14,7 +14,7 @@
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 	
 	<!-- 별도의 암호 인코딩을 위한 객체 선언 -->
-	<!-- <bean id="customPasswordEncoder" class="kr.or.blue.security.CustomPasswordEncoder"></bean> -->
+	<!-- <bean id="customPasswordEncoder" class="kr.or.ddit.security.CustomPasswordEncoder"></bean> -->
 	
 	<!-- Web 보안설정 -->
 	<security:http auto-config="true" use-expressions="true">

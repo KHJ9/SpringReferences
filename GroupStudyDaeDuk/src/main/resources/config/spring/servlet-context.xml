@@ -89,7 +89,7 @@
     <resources mapping="/ckUpload/**" location="/resources/ckUpload/" />
 	
 	<!-- 패키지를 어디서부터 스캔할 것인지를 지정하며, 여러 개의 패키지를 지정할 수 있다. 스캔 속도를 향상시킬 수 있다. -->
-	<context:component-scan base-package="kr.or.blue"/>
+	<context:component-scan base-package="kr.or.ddit"/>
 	    <task:annotation-driven/>
 		
 	<!-- <beans:import resource="websocket-context.xml"/> -->
