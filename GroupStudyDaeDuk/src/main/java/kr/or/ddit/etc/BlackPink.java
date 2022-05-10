@@ -1,4 +1,4 @@
-package kr.or.ddit.useless;
+package kr.or.ddit.etc;
 
 public interface BlackPink {
 	public void init();
