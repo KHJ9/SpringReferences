@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 이 곳의 default는 beans가 아닌 mvc이다. -->
+<!-- 어떤 default namespace를 쓰는 지는 알아두는 것이 좋다. -->
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<!-- 이렇게 관리하는 리소스 폴더들을 여기서 참조해 주는 것이 좋다. -->
+	<resources mapping="/resources/**" location="/resources/" />
+	<!-- ** : 하위 폴더가 여러개 있으면 /~ 로 하위 폴더를 찾겠다는 뜻이다. -->
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<!-- controller에서 해당 페이지를 찾을 때는 다음과 같은 경로를 기본으로 하여 페이지를 찾게 된다. -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<!-- 생성자 injection
+		 라이브러리로 가져온 외부 class 파일들은 어노테이션으로 설정이 안되서
+		 xml이나, java소스로 직접 등록해줘야 함	
+	 -->
+
+	<!-- 첨부파일 기능을 위한 선언 -->	
+	<!-- <beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" /> -->
+	
+	<!-- 주소 추가 -->
+	<!-- HyunJun hyunjun = new HyunJun(); -->
+	<!-- init-method : 객체가 생성된 후에 발동할 메서드 -->
+	<!-- destroy-method : 객체가 제거될 때 발동할 메서드 -->
+	<!-- scope : 클래스를 어떤 타입으로 만들 것인가, 예를 들어 싱글톤인가, 프로토타입(계속해서 생성되는)인가 (프로토타입은 사용하지 않을 것을 권장)-->
+	
+	<!-- page : 페이지가 다른 페이지로 변경되지 전까지 유지됨 -->
+	<!-- request : response가 되면 사라짐 -->
+	<!-- session : 사용자가 로그아웃 하거나, 3분이 지나면 사라짐 -->
+	<!-- application : 프로그램이 종료될 때까지 유지됨 -->
+	<!-- 
+	<beans:bean id="hyunjun" class="kr.or.ddit.domain.HyunJun" 
+		init-method="initStart" destroy-method="" scope="singleton" >
+		<beans:constructor-arg ref="jamba"/> 도메인 안에 도메인이 있는 경우 이렇게 추가한다.
+		<beans:property name="jamba" ref="jamba"/> 도메인 안에 도메인이 있는 경우 이렇게 추가한다.
+		ref : 생성자 파라미터가 참조형 객체인 경우
+	</beans:bean>
+	<beans:bean id="hyunjun2" class="kr.or.ddit.domain.HyunJun2" 
+		init-method="initStart" destroy-method="" scope="singleton" >
+		<beans:constructor-arg ref="jamba"/> 도메인 안에 도메인이 있는 경우 이렇게 추가한다.
+		<beans:property name="jamba" ref="jamba"/> 도메인 안에 도메인이 있는 경우 이렇게 추가한다.
+		ref : 생성자 파라미터가 참조형 객체인 경우
+	</beans:bean>
+	 -->
+	<!-- <beans:bean id="jamba" class="kr.or.ddit.domain.Jamba">
+		<beans:property name="color" value="blue"/>
+		value : 프로퍼티에 값을 입력할 때 사용
+	</beans:bean> -->
+
+	<!-- 인터셉터를 등록한다. -->	
+ 	<!--
+ 	<interceptors>
+		<interceptor>
+			<mapping path="/user/login"/>
+			이 경로를 가진 컨트롤러로 가기 전에 아래의 인터셉터를 거치게 된다.
+			<beans:bean class="kr.or.ddit.interceptor.MyFirstInterceptor"/>
+		</interceptor>
+	</interceptors> 
+	-->
+	
+	<!-- 이클립스가 실제로 사용하는 디렉토리 webapp 디렉토리가 다름을 인지하는 것이 중요
+		 이클립스의 임시폴더에 먼저 저장했다가, 원하는 디렉토리로 파일을 옮김
+		 이 옮기는 시간차로 인해서 파일 Preview와  Upload에 문제가 있는 것처럼 보임 -->
+	
+	<!-- 꼭 필요한 건 아닌 데 이런 것도 Bean이 된다는 걸 확인 차원에서 -->
+    <beans:bean id="uploadPath" class="java.lang.String">
+		<beans:constructor-arg value="C:/workspaceForSpring3/TestProject/src/main/webapp/resources/ckUpload/"/>
+	</beans:bean>
+
+	<!-- 이것도 꼭 필요한 건 아니지만 그냥 확인 차원에성 -->
+    <resources mapping="/ckUpload/**" location="/resources/ckUpload/" />
+	
+	<!-- 패키지를 어디서부터 스캔할 것인지를 지정하며, 여러 개의 패키지를 지정할 수 있다. 스캔 속도를 향상시킬 수 있다. -->
+	<context:component-scan base-package="kr.or.blue"/>
+	    <task:annotation-driven/>
+		
+	<!-- <beans:import resource="websocket-context.xml"/> -->
+	
+</beans:beans>

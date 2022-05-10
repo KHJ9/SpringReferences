@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	version="4.0">
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+		<param-value>classpath:config/spring/root-context.xml</param-value>
+		<!-- 이 곳에 다른 context를 추가해도 되나 가능한 한 root-context안에서 별도의 context를 참조하는 것이 좋다. -->
 	</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
@@ -14,20 +15,107 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
+	<!-- DispatcherServlet : 컨트롤러에서 뷰까지 로직을 관리하는 곳 -->
 	<!-- Processes application requests -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+			<!-- classpath : 자바에선 소스 '디렉토리'를 의미한다. (src/main/resources) -->
+			<!-- buildpath -> source -> 여기서 classpath에 포함될 디렉토리를 추가할 수 있다. -->
+			<!-- classpath 현재 4곳이 기본적으로 설정되어 있다. -->
+			<param-value>classpath:config/spring/servlet-context.xml</param-value>
 		</init-param>
+		
+		<!-- 핸들러를 찾을 수 없을 때 웹에 표시될 예외를 java단으로 던진다. -->
+		<!-- 그러면 java의 예외를 다루는 컨트롤러에서 이 예외를 직접 다룰 수 있다. -->
+		<init-param>
+			<param-name>throwExceptionIfNoHandlerFound</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		
 		<load-on-startup>1</load-on-startup>
+		<!-- 서블릿 3.0부터 Multipart 자체 지원 -->
+		<multipart-config>
+			<location>C:/upload/temp</location> <!-- 파일 임시저장소, 메모리 초과시 -->
+			<max-file-size>20971520</max-file-size> <!-- 1MB * 20, 파일 최대용량 -->
+			<max-request-size>41943040</max-request-size> <!-- 40MB, 요청 용량최대 -->
+			<file-size-threshold>20971520</file-size-threshold> <!-- 20MB, 메모리상 최대용량 -->
+		</multipart-config>
 	</servlet>
 		
 	<servlet-mapping>
+		<!-- /* 로 하면 완전 모든 것을 spring에서 처리하겠다는 뜻 -->
+		<!-- / 로 하면 일부는 Tomcat의 Default DispatcherServlet이 처리-->
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+	<!-- Default 인코딩 설정 -->
+	<!-- jsp 인코딩은 별도로 해야 한다.(거진 인코딩이 안 되면 프론트 단의 인코딩 문제임을 알 수 있음) -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>
+			org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
+	<!-- 필터 선언을 web.xml에서 굳이 작성하지 않아도 된다. 어노테이션 @WebFilter가 있다. -->
+	<filter>
+		<filter-name>myFirstFilter</filter-name>
+		<filter-class>kr.or.ddit.filter.MyFirstFilter</filter-class>
+		<init-param>
+			<param-name>dummy</param-name>
+			<param-value>Hello Filter!</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>mySecondFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>mySecondFilter</filter-name>
+		<filter-class>kr.or.ddit.filter.MySecondFilter</filter-class>
+		<init-param>
+			<param-name>dummy</param-name>
+			<param-value>Hello Filter!</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>mySecondFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+ 
+ 	<!-- 작성된 순으로 필터가 작동한다. -->
+ 	<!-- 필터는 보통 보안관련이나 접근로그를 남기거나, 특정 URL패턴에 공통적용이 필요한 기능을 구현할 때 사용한다. -->
+ 	<!-- Spring Security가 (필터와 인터셉터를 이용해서 만들어짐 -->
+ 	<!-- 필터가 조금 넓은 영역에 적용된다면, 인터셉터는 좀 더 구체적인 좁은 영역에 적용 -->
+ 	
+ 	<!-- 스프링 시큐리티가 동작하기 위한 필터체인 등록 -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+ 
 </web-app>

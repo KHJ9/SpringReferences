@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- xmlns : xml namespace -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd">
+	<!-- ㄴ 스프링의 버젼명은 지우는 것이 좋다. -->
+	<!-- ㄴ bean 태그를 사용하려면 위와 같이 beans xmlns를 추가해야 한다. -->
+	<!-- ㄴ mybatis 설정을 위해 위의 mybatis xmlns를 추가해야 한다. -->
+
+	<!-- context의 적용은 web.xml에서 한다. -->
+
+	<!-- 프로퍼티 가져오는 태그 -->
+	<context:property-placeholder location="classpath:config/properties/*.properties"/>
+
+	<!-- 히카리 -->
+	<!-- 일반 프로그램에도 DB 접속을 할 수 있기 때문에 servlet-context가 아닌 이 곳에 hikari 설정태그를 추가한다. -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+ 		<!-- setDriverClassName("oracle.jdbc.driver.OracleDriver") -->
+ 		<property name="driverClassName" value="${db.driverClassName}"/>
+		<property name="jdbcUrl" value="${db.jdbcUrl}"/> 
+		<property name="username" value="${db.username}"/>
+		<property name="password" value="${db.password}"/>
+	</bean>
+	
+	<!-- 생성자 injection -->
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"/>
+	</bean>
+		
+	<!-- Mybatis -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	    <property name="dataSource" ref="dataSource"/>
+	    <!-- <property name="configLocation"></property> -->
+	</bean>
+	
+	<!-- <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean> -->
+	
+	<!-- mapper가 모여있는 패키지명을 선언함, mapper검색을 빠르게 할 수 있다. -->
+	<mybatis-spring:scan base-package="kr.or.blue.mapper"/>
+
+</beans>

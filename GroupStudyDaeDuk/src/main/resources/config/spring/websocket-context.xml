@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd">
+
+	<!-- path : End-Point : 참가한 모든 클라이언트가 한 곳으로 연결된 곳 -->
+	<!-- End-Point에 오는 요청들을 chatHandler가 처리할 것임 -->
+	<websocket:handlers>
+		<!-- 클래스명 앞에 소문자로 작성하면 java단에서 대문자로 사용할 수 있다. -->
+		<!-- java단에선 ChatHandler라고 사용할 수 있다. -->
+		<websocket:mapping handler="chatHandler" path="/ws-chat" />
+		<websocket:handshake-interceptors>
+			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+	</websocket:handlers>
+</beans>

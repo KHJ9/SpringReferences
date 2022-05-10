@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- xmlns="http://www.springframework.org/schema/beans" : beans가 default가 된다. xml 구문에서 beans:~ 생략 가능하다.-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.2.xsd">
+
+	<!-- Sequence상 이런 건 @Component로 만들지 않는다. -->
+	<bean id="customAccessDeniedHandler" class="kr.or.ddit.security.CustomAccessDeniedHandler"></bean>
+	<bean id="customAuthenticationSuccessHandler" class="kr.or.ddit.security.CustomAuthenticationSuccessHandler"></bean>
+	
+	<!-- 암호 인코딩을 위한 전용 객체 선언 -->
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+	
+	<!-- 별도의 암호 인코딩을 위한 객체 선언 -->
+	<!-- <bean id="customPasswordEncoder" class="kr.or.blue.security.CustomPasswordEncoder"></bean> -->
+	
+	<!-- Web 보안설정 -->
+	<security:http auto-config="true" use-expressions="true">
+		<!-- <security:intercept-url pattern="/fbi/all" access="permitAll"/> -->
+		
+		<!-- /fbi/member => 해당 url로 들어가면 컨트롤러가 페이지를 표시하기 이전에 로그인 페이지를 중간에 표시한다. -->
+		<security:intercept-url pattern="/fbi/admin" access="hasRole('ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/fbi/member" access="hasRole('ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/fbi/blue" access="hasRole('ROLE_BLUE')"/>
+		
+		<!-- 위에 설정한 거 빼고 다 열어주기(이외의 페이지를 들어가면 별도의 로그인 페이지가 출력되지 않는다.) -->
+		<security:intercept-url pattern="/**" access="permitAll"/>
+		
+		<!-- auto-config="true" 쓰면  ... -->
+		
+		<!-- 로그인 페이지를 어떤 경로로 설정할 것인가, 성공 시 어떤 클래스로 이동할 것인가, 로그인 시 받아올 파라미터 이름은? -->
+		<security:form-login login-page="/mylogin" 
+			authentication-success-handler-ref="customAuthenticationSuccessHandler" 
+			username-parameter="username" password-parameter="password"/>
+		
+		<!-- 로그아웃 경로를 어떻게 설정할 것인가 -->
+		<security:logout logout-url="/mylogout" invalidate-session="true"/>
+		<!-- 로그아웃 거부 시 어디로 이동할 것인가 -->
+		<!-- <security:access-denied-handler error-page="/accessError"/> -->
+		<security:access-denied-handler ref="customAccessDeniedHandler"/>
+		<security:csrf disabled="true"/>
+	</security:http>
+
+	<!-- 인증관리자 설정 -->
+	<!-- erase-credentials : 자격확인서(기본적으로 로그인 시 자격확인서를 지우게 되어있다.) -->
+	<security:authentication-manager erase-credentials="false">
+		<security:authentication-provider>
+			<!-- (웬만하면 이걸로 충분한데, 안 충분한 사람들이 있음. userdetails(사용자상세정보)) -->
+			<!-- db에 있는 계정테이블로 로그인을 시도하기 위한 선언 -->
+			<!-- db에 있는 계정테이블로 로그인을 시도하려면 인코딩을 꼭 거쳐야 한다. -->
+			<security:jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="SELECT USERID,USERPW,ENABLED FROM MYMEM WHERE USERID = ?"
+				authorities-by-username-query="SELECT USERID,USERAUTH FROM MYAUTH WHERE USERID = ?"/>
+			<security:password-encoder ref="bcryptPasswordEncoder"/>
+			
+			<!-- db를 사용하지 않고 직접 계정 목록을 추가하는 경우 -->
+			<!-- <security:user-service>
+				<security:user name="hyunjun" password="{noop}hyunjun" authorities="ROLE_ADMIN,ROLE_BLUE,ROLE_MEMBER" />
+				<security:user name="blue" password="{noop}blue" authorities="ROLE_BLUE" />
+			</security:user-service> -->
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+</beans>
