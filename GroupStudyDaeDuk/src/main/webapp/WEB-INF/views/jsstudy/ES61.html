@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    var v_str = "안녕하세요";
+    //v_str = "현준님 " + v_str; //기존 문자열 더하기 방식
+    v_str = `현준님 ${v_str}`; // Template  String방식이라고 부름
+                               // 말만 멋지지 이미 흔한 방식
+   // alert(v_str);
+   
+   var v_obj = {
+       name:"조현",
+       habit:"잠자깅"
+   }
+
+   var { habit } = v_obj;  // 구조분해
+   var habit = v_obj.habit;
+   
+   habit = "new";
+   
+   alert(habit);
+
+   
+</script>    
+</body>
+</html>

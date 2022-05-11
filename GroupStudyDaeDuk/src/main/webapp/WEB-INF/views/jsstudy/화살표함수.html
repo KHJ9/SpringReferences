@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<script>
+    // 화살표 함수(일부 제약사항이 있음)
+    // 제약사항이 발생하는 경우는 힘들게 해결하려 하지말고
+    // 그냥 function키워드 붙여쓰면 됨
+    
+    var f_funct = function(){
+        alert("일반함수");
+    }
+
+    var v_func = () => {
+        alert("화살표 함수, 람다식 1");
+    }
+
+    // 매개변수가 하나밖에 없을 때는 괄호를 작성하지 않아도 된다.
+    var v_func = p_arg => {
+        alert("화살표 함수, 람다식 2" + p_arg);
+    }
+
+    // 함수 내용이 한 줄일 때 대괄호를 작성하지 않아도 된다. 리턴구문도 안써도 된다.
+    var v_func = p_arg => alert("화살표 함수, 람다식 3" + p_arg);
+
+    
+
+</script>

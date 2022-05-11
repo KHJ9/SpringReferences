@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #id_disp {
+            width : 200px;
+            height : 200px;
+            border : 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="id_disp"></div>
+    <!-- accept : 확장자 허용범위 설정 -->
+    <input type="file" name="nm_file" id="id_file" multiple accept=".jpg, .png"/>
+    <!-- <input type="file" name="nm_file" id="id_file" accept=".jpg, .png"/> -->
+    <script>
+        var v_disp = document.querySelector("#id_disp");
+        // 스크립트에선 사용자가 선택해준 파일만 읽을 수 있음
+        // !! 사용자 시스템에 쓰는 건 불가능 (보안상의 이유)
+        var v_fileBtn = document.querySelector("#id_file");
+
+        var f_file = function(file){
+            // 파일리스트 안 파일객체 뽑기
+            var v_fileReader = new FileReader(); // 파일 읽어주는 객체
+            // 다 읽으면 onload 이벤트 발생(비동기 -> NonBlocking)
+            
+            // 기존 reader객체의 이벤트를 돌리는 와중에
+            // 기존 reader에 새로 reader를 생성, 덮어씌어 이벤트를 돌리면
+            // 기존 이벤트가 완료되지 못한다.
+
+            // 그래서 이와 같이 f_file, f_change로 함수를 분리하여 
+            // 코드를 작성했다. 그리하여 reader객체 덮어씌우는 문제를 해결하였다.
+            v_fileReader.onload = function(){
+                // v_fileReader.result : 파일데이터(바이너리코드를 아스키코드로 반환)
+                console.log(v_fileReader);
+                var v_img = document.createElement("img");
+                v_img.src = v_fileReader.result; // this is so beautiful final result code
+                v_img.setAttribute("width", 200);
+                v_disp.appendChild(v_img);
+            }
+
+            v_fileReader.readAsDataURL(file);
+        }
+
+        // 보통 change이벤트를 주로 걸어서 사용
+        var f_change = function(){
+            // input type=file의 가장 중요한 속성 files
+            // !!! 첨부파일을 가져올 때는 .files[ 0 ~ n ]을 작성하면 된다. (항상 배열을 반환)
+            var v_file = v_fileBtn.files;
+            for(var i in v_file) {
+                f_file(v_file[i]);
+            }
+                
+        }
+        // input:file 태그의 경우 주로 change 이벤트를 많이 사용한다. (파일이 추가되었을 때)
+        v_fileBtn.addEventListener("change", f_change);
+    </script>
+</body>
+</html>

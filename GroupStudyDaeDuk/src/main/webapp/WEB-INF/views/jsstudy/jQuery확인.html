@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+<!--일반적으로 jQuery는 CDN 사용 권장 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- 위처럼 여러버젼 등록하면 바봉-->
+</head>
+<body>
+    <div>AAA</div>
+    <div>BBB</div>
+    <div>CCC</div>
+    <div>DDD</div>
+    <input type="checkbox" value="aa" id="id_ck" checked>
+    <script>
+        //  attr vs prop
+        // 같은 객체를 여러개 생성할 필요가 없으니깡
+        // 변수로 받아서 사용하면 쪼메(때론 많이) 메모리 절약
+        var $div=$("div").html("메렁");
+        $div.css("color",function(p_inx,p_val){
+            return "blue";
+        })
+        // javascript와 jQuery같이 쓰깅
+        // 현실적으로 같이 쓰는 게 지금은 유리
+        var v_ckbox = document.querySelector("#id_ck");
+        //js 메소드나 속성이 갑자기 기억이 잘 안나고
+        //jQuery만 기억나거나, jQuery에서 편한 메소드를 제공해 줄때
+        $(v_ckbox).prop("checked",false);
+
+        // 이 정도는 기본이니까 몸에 잘 익혀둡니당
+    </script>
+</body>
+</html>

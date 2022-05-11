@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>넘 쉬운문제</title>
+</head>
+<body>
+    <script>
+        let v_members = [
+           {name:"로제",position:"grade1"}, 
+           {name:"제니",position:"grade2"}, 
+           {name:"리사",position:"grade3"}, 
+           {name:"지수",position:"grade4"}, 
+           {name:"슈",position:"grade2"}
+        ];
+
+        let v_levels = {
+            grade1:"사장님",
+            grade2:"전무님",
+            grade3:"부장님",
+            grade4:"사원님"
+        }
+
+        // 숙제는 위의 2가지 데이터를 이용해서
+        // 아래처럼 테이블(table 태그 이용)로 출력
+        // ex)
+        // 넘버  이름  직위
+        // 1     로제  사장님
+        // 2     제니  전무님
+
+        // table은 문자열을 이용해서 많이 만듬
+        let v_tblStr =  "<table>";
+            v_tblStr +=     "<tr><th>번호</th><th>이름</th><th>직위</th></tr>";
+        
+        for(index in v_members){
+            v_tblStr +=     `<tr>`;
+            v_tblStr +=         `<td>${parseInt(index)+1}</td>`;
+            v_tblStr +=         `<td>${v_members[index].name}</td>`;
+            v_tblStr +=         `<td>${v_levels[v_members[index].position]}</td>`;
+            v_tblStr +=     `</tr>`;
+        }
+            v_tblStr += "</table>";
+        
+        document.getElementsByTagName('body')[0].innerHTML = v_tblStr;
+    </script>
+</body>
+</html>

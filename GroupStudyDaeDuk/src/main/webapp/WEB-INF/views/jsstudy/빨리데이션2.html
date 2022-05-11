@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation(유효성검사)</title>
+</head>
+<body>
+    <script>
+        // $(function(){});
+        // DOMContentLoaded vs load 이벤트
+        window.addEventListener("load", function(){
+            console.log(document.querySelector("#id_form"));
+        });
+    </script>
+    <!-- html에서 서버로 어떤 정보를 보내려면 꼭 form태그가 필요 -->
+    <!-- default 메소드는 get -->
+    <!-- name 속성 주는 걸 잊어버리는 사람이 많음 (name 속성 꼭 부여할 것) -->
+    <!-- ?뒤에 문자열을 보통 쿼리스트링(QueryString)이라고 부름 -->
+    <!-- ! 한 페이지 안에 여러 개의 form 태그를 만들어도 되나 form 태그 안에 form 태그를 작성할 수는 없다. -->
+    <!-- onsubmit : 보내기 직전에 발생하는 이벤트 -->
+    
+    <!-- 요즘 방식 : 하도 똑같은 자바스크립트소스가 반복사용되다보니 해당 기능을 아예 넣어줌 -->
+    <form action="시작.html" id="id_form">
+        <input type="text" name="nm_id" id="id_id" value="flower9" readonly><br>
+        <input type="text" name="nm_id2" id="id_id2" value="flower9" disabled><br> <!-- disabled는 값이 넘어가지 않는다. -->
+        <input type="password" name="nm_pw" id="id_pw" required="required" placeholder="PW를 입력하시오"><br>
+        <input type="text" name="nm_tel" id="id_tel" pattern="010-[0-9]{4}-[0-9]{4}" required placeholder="010-1111-2222"><br>
+        <input type="submit" value="전송">
+    </form>
+</body>
+</html>

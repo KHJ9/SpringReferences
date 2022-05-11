@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .nemo {
+            display : inline-block;
+            width : 20px;
+            height : 20px;
+            text-align : center;
+            border : 1px solid black;
+        }
+
+        .empty {
+            display : inline-block;
+            width : 20px;
+            height : 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="id_disp"></div>
+    <script>
+        const c_disp = document.querySelector("#id_disp");
+        function f_ranColor(){
+            return "rgb(" + Math.floor(Math.random()*256) + ","
+                          + Math.floor(Math.random()*256) + ","
+                          + Math.floor(Math.random()*256) + ")";
+        }
+
+        function f_nemo(p_char){
+            let l_nemo = document.createElement("div");
+            l_nemo.setAttribute("class", "nemo");
+            if(p_char == "*"){
+                l_nemo.style.backgroundColor = f_ranColor();
+                l_nemo.style.color = f_ranColor();
+                
+                setInterval(function(){
+                    l_nemo.style.backgroundColor = f_ranColor();
+                    l_nemo.style.color = f_ranColor();
+                }, 1000);
+                
+                l_nemo.innerHTML = "*";
+            }
+            return l_nemo;
+        }
+        
+        function f_nemoT(p_char){
+            let l_nemo = document.createElement("div");
+            l_nemo.setAttribute("class", "nemo");
+            if(p_char == "*"){
+                l_nemo.style.backgroundColor = "transparent";
+                l_nemo.style.color = "transparent";
+                l_nemo.innerHTML = "*";
+                l_nemo.style.border = "1px solid transparent";
+            }
+            return l_nemo;
+        }
+
+        for(let i=1; i<=10; i++){
+            for(let j=1; j<=10; j++){
+                if(i>=j){
+                    c_disp.appendChild(f_nemo("*"));
+                } else {
+                    c_disp.appendChild(f_nemoT("*"));
+                }
+            }
+            c_disp.innerHTML += "<br>";
+        }
+        for(let i=1; i<=10; i++){
+            for(let j=1; j<=10; j++){
+                if(i<=j){
+                    c_disp.appendChild(f_nemo("*"));
+                }
+            }
+            c_disp.innerHTML += "<br>";
+        }
+        for(let i=10; i>0; i--){
+            for(let j=10; j>0; j--){
+                if(i>=j){
+                    c_disp.appendChild(f_nemo("*"));
+                } else {
+                    c_disp.appendChild(f_nemoT("*"));
+                }
+            }
+            c_disp.innerHTML += "<br>";
+        }
+        for(let i=10; i>0; i--){
+            for(let j=10; j>0; j--){
+                if(Math.abs(i-10)+1 >= j){
+                    c_disp.appendChild(f_nemo("*"));
+                } else {
+                    c_disp.appendChild(f_nemoT("*"));
+                }
+            }
+            c_disp.innerHTML += "<br>";
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

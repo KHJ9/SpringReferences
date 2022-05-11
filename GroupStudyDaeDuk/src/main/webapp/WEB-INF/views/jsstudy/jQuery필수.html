@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+<!-- jQuery CDN-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+   <div id="id_disp">내가 innerHTML</div>
+   <input type="text" name="nm_txt" value="ㅋㅋ">
+<script>
+ alert($("input").attr("name")); // name 속성 읽기
+ $("input").attr("name","kgb"); // name속성에 값 세팅
+ $("input").attr({
+     "name":"fbi",
+     "type":"checkbox"
+ })
+ $("input").attr("name",function(p_inx,p_val){
+       alert(p_inx + " : " + p_val);
+ })
+</script>
+</body>
+</html>

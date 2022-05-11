@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script>
+    // 더미데이터 입력(페이지 나누기용);
+    var v_tblName = "Gesi";
+    var v_datas = new Array(); // 글 객체를 담을 빈 배열
+
+    for(var i=1; i<=108; i++){ // 108q번뇌용 108개 글
+        var v_gul = new Object(); // 빈 객체 생성
+        v_gul.pid = i;
+        v_gul.title = "제목" + i;
+        v_gul.writer = "작가" + i;
+        v_gul.content = "내용" + i;
+        var v_skills = ["js","python","oracle","spring"];
+        var v_count = Math.floor(Math.random()*2 + 1); // 1 또는 2가 나온다.
+        for(var j=0; j<v_count; j++){
+            // splice(n,m) : n번째서부터 m개를 지워 반환한다.
+            // splice(-n,m) : 뒤에서 n번째서부터 m개를 지워 반환한다.
+            v_skills.splice(Math.floor(Math.random()*v_skills.length),1);
+        }
+        v_gul.skills = v_skills;
+        v_datas.push(v_gul);
+    }
+
+    // localStorage에 배열을 문자열화해서 저장
+    localStorage.setItem(v_tblName, JSON.stringify(v_datas));
+    // 결과 눈으로 꼭 확인
+
+</script>

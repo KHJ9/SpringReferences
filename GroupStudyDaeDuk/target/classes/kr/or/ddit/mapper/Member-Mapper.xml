@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.MemberMapper">
+	<resultMap type="memberVO" id="memberMap">
+		<id property="userid" column="userid"/> <!-- PK -->
+		<result property="userid" column="userid"/>
+		<result property="userpw" column="password"/>
+		<result property="userName" column="username"/>
+		<result property="regDate" column="regdate"/>
+		<!-- 조인된 결과값을 리스트로 저장한다. -->
+		<collection property="authList" resultMap="authMap" />
+	</resultMap>
+
+	<resultMap type="authVO" id="authMap">
+		<result property="userid" column="userid"/>
+		<result property="auth" column="authority"/>
+	</resultMap>
+	
+	<select id="read" parameterType="String" resultMap="memberMap">
+		select
+		mem.userid, password, username, 
+		enabled, regdate, authority
+		from users mem, authorities auth
+		where 1 = 1
+		and mem.userid = auth.userid
+		and mem.userid = #{userid}
+	</select>
+
+</mapper>

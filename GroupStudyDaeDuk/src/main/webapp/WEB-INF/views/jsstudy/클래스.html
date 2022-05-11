@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script>
+    //자바스크립트 function 키워드는 class의 의미로도 쓰일 수 있음
+
+   var SY = function(p_name,p_bunigi){  // class의 의미, 또는 constructor(생성자)의미
+        this.name = p_name;
+        this.bunigi = p_bunigi;
+        return this;  // 이것이 생략 되어 있음, 명시적으로 표현 해도 됨
+   } 
+
+   //prototype(원형)에 메소드 추가, 받아들이는  순간 JS 고급 개발자
+   SY.prototype.getName = function(){
+       return this.name;
+   }
+   SY.prototype.getBunigi = function(){
+       this.bunigi = "흥칫뿌웅";
+       return this.bunigi;
+   }
+
+
+   
+   var cloneSY = new SY("경송은","에고 저게 뭐얌");
+   alert(cloneSY.getBunigi()); // 메소드 사용
+   /*
+   var cloneSY1 = new SY("송은경","고 저게 뭐얌에");
+   console.log(cloneSY1);
+   */
+</script>

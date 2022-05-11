@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <!-- <link rel="import" href="JSONP.html"> -->
+</head>
+<body>
+    <input type="button" value="눌러방" id="id_btn">
+    <input style="display:none" type="text" value="" id="id_sch"><br>
+    <div id="id_disp"></div>
+    <!-- 함수를 미리 만들어줌 -->
+    <!-- 이렇게 데이터를 넘겨받는 것을 JSONP(JSON PADDING)라고 부름 -->
+    <script>
+        
+        /* 
+            css selector : 
+                바탕화면 pdf 파일 참조할 것
+
+        */
+        
+        var v_pre = "https://www.flickr.com/services/feeds/photos_public.gne?tags=";
+        var v_post = "&format=json";
+        var v_sch = document.querySelector("#id_sch");
+        
+        var f_addFlickr = function(){
+
+            // [flickr 갱신작업]
+
+            var v_script = document.querySelector("#id_fl");
+
+            if(v_script){ // 존재하면 true
+                document.body.removeChild(v_script);
+            }
+
+            var v_scriptSrc = v_pre + v_sch.value + v_post;
+            // script 태그 생성
+            v_script = document.createElement("script");
+            v_script.src = v_scriptSrc;
+            v_script.id = "id_fl";
+            // body 태그에 해당 스크립트를 붙인다.
+            document.body.appendChild(v_script);
+        }
+        
+        v_sch.addEventListener("keydown", function(){
+            if(event.keyCode == 13){ // 엔터키면
+                f_addFlickr();
+            }
+        });
+
+        var v_disp = document.querySelector("#id_disp");
+
+        var jsonFlickrFeed = function(p_json){
+            v_disp.innerHTML = "";
+            var v_items = p_json.items;
+            
+            for(var i=0; i<v_items.length; i++){
+                // 이미지태그 생성
+                var v_img = document.createElement("img");
+
+                // src에 경로 할당
+                v_img.src = v_items[i].media.m;
+
+                // v_disp에 붙여넣기
+                v_disp.appendChild(v_img);
+            }
+            
+            //console.log(p_json); // 눈으로 값 확인!
+        }
+    </script>
+    <!-- <script src="https://www.flickr.com/services/feeds/photos_public.gne?tags=dog&format=json"></script> -->
+    <script>
+
+        // 과제
+        // 가져온 xml 내용을 table형태로 뿌리기
+
+        // document.getElementsByTagName, querySelector
+
+        var v_btn = document.querySelector("#id_btn");
+        v_btn.addEventListener("click", function(){
+            $.ajax({
+                method:"get",
+                url:"data.xml",
+                async:true,
+                dataType:"xml",
+                success:function(p_rslt){
+                    console.log(p_rslt);
+                    // 나중에 하기
+                },
+                error:function(xhr){
+                    alert(xhr.status);
+                }
+            });
+        }); 
+
+    </script>
+    <script id="id_fl"></script>
+    <script src="myajax.js"></script>
+</body>
+</html>

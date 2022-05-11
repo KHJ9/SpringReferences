@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="id_btn" type="button" value="눌러방" onclick="f_inline(this)">
+    <script>
+        
+        v_btn2.addEventListener("click", function(e){
+            console.log("체크:",e.target)
+        });
+
+        var v_roze = function(){
+            alert("블랙핑크");
+        }
+
+        //v_btn2.addEventListener("click", f_roze()); // 클릭을 안 해도 그냥 실행되어 버린다.
+        v_btn2.addEventListener("click", f_roze); // 클릭을 안 해도 그냥 실행되어 버린다.
+
+        var v_btn2 = document.querySelector("#id+btn2");
+
+        function f_inline(p_this){
+            console.log(p_this);
+            document.querySelector("#id_btn").value = "꾹 눌러주세요";
+        }
+    </script>
+</body>
+</html>

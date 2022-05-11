@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var v_str = "블랙핑크 로제짱";
+        alert(typeof(v_str));
+        // String은 원시타입(Primitive Type)이라고 했는데 메소드가?
+        // 원시타입에 .을 붙이면 자동으로 Wrapper클래스로 바뀜(곧 객체로 바뀜)
+        // 문자열의 메소드들은 새로운 문자열을 만들어서 리턴한다.
+        console.log(v_str.replace("짱", "왕짱"));
+        // 새로운 값으로 원 변수값에 넣어줘야 바뀜
+        v_str = v_str.replace("짱", "왕짱");
+        console.log(v_str);
+    </script>
+</body>
+</html>

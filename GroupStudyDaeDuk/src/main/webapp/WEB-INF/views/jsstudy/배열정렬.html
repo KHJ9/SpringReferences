@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var v_arr = JSON.parse(localStorage.getItem("Gesi"));
+        v_arr.sort(function(a,b){
+            return a.pid-b.pid; // 내림차순
+        });
+        console.log(v_arr);
+    </script>
+</body>
+</html>

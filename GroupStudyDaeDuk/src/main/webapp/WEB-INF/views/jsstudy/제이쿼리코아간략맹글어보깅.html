@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script src="./myQuery.js"></script>
+<body>
+    <div class="ysGoog">흥</div>
+    <div class="ysGood">치</div>
+    <div class="ysGoog">쁘</div>
+    <div class="ysGood">아</div>
+    <div class="ysGoog">앙</div>
+    <input type="text" name="nm_hj" id="id_hj" value="희정">
+    <input type="text" name="nm_hj" id="id_hj" value="찬길">
+    <input type="text" name="nm_hj" id="id_hj" value="조현">
+    <input type="button" id ="id_btn" value="눌러방">
+</body>
+<script>
+    //시간 없다고 미루지 말고 꼭 복습 자신만의 정리 만들 것
+    //jQuery에 보면 end()라는 메소드가 있음
+    // 이해했다고 잘 쓰는 것 아님, 진짜 써봐야 잘 쓰는 것임
+    $.fn.end = function(){
+        return $(this.prev); //저장해 놓은 선택자를 활용
+    }
+
+    //확인
+    console.log($("div").eq(1));
+    console.log($("div").eq(1).end());
+
+    /*
+    $("input").attr("value",function(p_index,p_attrVal){
+        console.log(this);
+        if(p_index ==0){
+            return "류진 예비기사님";
+        }
+        return p_attrVal;
+    })
+    */
+    /*
+    $("input").attr("name","희정")
+              .attr("value","캐리커쳥")
+              .attr("id","난id")
+              .attr("type","radio")
+    $("input").attr({
+          "name":"희정",
+          "value":"캐리커쳥",
+          "id":"난id",
+          "type":"checkbox"
+    })
+    */
+    //alert($("input").attr("value"));
+    //$("input").attr("type","button");
+
+
+
+    /*
+    $(".ysGoog,.ysGood").html(function(p_index,p_oldHtml){   
+        // alert(p_index + " : " + p_oldHtml);
+        console.log(this); // current element
+       //return p_oldHtml + " <h1>푸하하하</h1>";
+       return this.innerHTML + " 메렁! 메렁!";
+    });
+    */
+    //alert($(".ysGood").html());
+    //$(".ysGood").html("<h1>민혁 부부개발자의 길을 향해서</h1>");
+
+    //var v_test = new ysDom(".ysGood"); // 바보같애
+    //var v_test = $(".ysGoog").eq(1);
+    //console.log(v_test);
+
+</script>

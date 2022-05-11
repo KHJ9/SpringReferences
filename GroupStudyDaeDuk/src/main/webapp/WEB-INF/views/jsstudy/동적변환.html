@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 자바스크립트는 동적 언어(데이터 타입이 = 오른쪽 값으로 자동할당)
+        //"use strict" // 엄격모드 적용 (이 구문을 쓰고 아래에 var를 안 쓰면 오류가 난다.)
+        v_str = "문자열";
+        alert(typeof(v_str));
+        var v_num = 272;
+        alert(typeof(v_num));
+        var v_obj = {}; // new object()와 같은 표현
+        var v_obj = "흥칫뿡";
+        alert(typeof(v_obj));
+
+        // 페이지가 넘어가면 변수들은 다 초기화가 된다.
+        // 문자열이 boolean값으로 변경된다. (문자열이 있으면 true, 빈 문자열은 false이다.)
+        if("중프힘들었어요"){
+            alert("아니요"); //?
+        }
+
+        // 숫자는 0 이외 전부 true
+        if(0){
+            alert("true입니다."); //?
+        }
+
+        // 문자열 더하기의 경우 문자열 결합이 된다.
+        var v_check = "111" + 272;
+        alert(v_check); // "111272"
+
+        // 빼기의 경우 문자열 빼기는 없으므로 숫자빼기로 적용된다.
+        var v_check = "111" - 272;
+        alert(v_check); // "111272"
+
+        var v_check2 = "272" - 0;
+        alert(typeof(v_check2)); // number로 뜨게하고 픔
+
+        
+    </script>
+</body>
+</html>
+
+
+
+
+
+

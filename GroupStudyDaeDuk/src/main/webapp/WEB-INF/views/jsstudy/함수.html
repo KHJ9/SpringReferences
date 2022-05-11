@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 자바스크립트는 함수지향언어, 객체지향언어를 바탕
+        // var v_roze = "로제"; // 아래와 같음
+        window.v_roze = "로제";
+        // alert(window.v_roze);
+        function myRoze(){
+            //alert("Gone");
+        }
+
+        window.myRoze = function(){
+            //alert("Gone");
+        }
+
+        f_name(); // 함수가 만들어지기 전에 call : hoisting
+        // 선언부분이 밑에 있어도 위의 함수가 정상적으로 호출된다.
+        // 실제로 함수를 호출할 때는 이전에 미리 선언부분을 위로 끌어올린다.
+
+        // 또 다른 방식의 함수 선언 (공식 선언문법이 아닌 표현식(Expression)으로 hoisting이 먹히지 않는다.)
+        var f_name = function(){
+            alert("함수얌!");
+        }
+
+        /* function f_name(){
+            alert("함수얌!");
+        } */
+    </script>
+</body>
+</html>
+
+
+

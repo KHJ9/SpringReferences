@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>모바일에서 많이 쓰는 손가락 무한스크롤</title>
+</head>
+<body>
+    <script>
+
+        // 스크롤바 이동, 크롬버그, 구글의 경우 고쳐주지 않았다.
+        // 아래의 페이지가 추가로 생겨도 스크롤의 위치가 계속 아래로 되지 않고
+        // 현재 위치에서 계속 머무룰 수 있도록 해준다.
+        setTimeout(() => { window.scrollTo(0,0); }, 50);
+
+        // 더미 데이터
+        for(var i=1; i<=500; i++){
+            document.write("<h2>stay "+i+"</h2>")
+        }
+        // 스크롤 이벤트
+        var f_scroll = () => {
+            var scrollTop = Math.ceil(document.documentElement.scrollTop);
+            var clientHeight = document.documentElement.clientHeight;
+            var scrollHeight = document.documentElement.scrollHeight;
+            
+            // 실제 사용은 스크롤바가 끝나기 전 조금 위의 값으로 세팅(튜닝)
+            if(scrollTop + clientHeight >= scrollHeight) {
+                var v_disp = document.querySelector("#id_disp");
+                for(var i=1; i<=10; i++){
+                    document.querySelector("body").innerHTML += "<h1>새로운 데이터</h1>";
+                }
+            }
+
+            // scrollTop : window 위로 숨겨져 않는 화면의 높이
+            console.log("top", scrollTop);
+            // clientHeight : window의 높이
+            console.log("view높이", clientHeight);
+            // scrollHeight : 실제 전체화면의 높이
+            console.log("문서높이", scrollHeight);
+            console.log();
+
+
+        }
+        window.addEventListener("scroll", f_scroll);
+    </script>
+    <div id="id_disp"></div>
+</body>
+</html>

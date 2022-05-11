@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // !!! 함수를 매개변수로 넘김 -> 아주 중요!!!!!
+        var f_cb = function(){
+            alert("난 f_cb얌");
+        }
+
+        var f_kgb = function(p_cb){
+            alert("난 kgb얌");
+            p_cb(); // callback함수라고 불림(단순히 뒤에 불렸다는 의미)
+        }
+
+        // 함수를 매개변수로 보내줄 때는 괄호를 작성하지 않는다.
+        // 그런 함수이름을 함수포인터(FP)라고 부름
+
+
+        // 1 : 이미 만들어진 함수를 매개변수로 보내는 경우
+        // f_kgb(f_cb);
+        // 2 : 즉석으로 만들어진 함수를 매개변수로 보내는 경우
+        // f_kgb(function(){
+        //     alert("함수를 즉석으로 작성하여 콜백함수로 보낸다.");
+        // });
+
+        // 배열을 받아서 콜백함수에 index와 값을 넘겨주는 함수
+        var f_arrEach = function(p_arr, p_cb){
+            for(var i=0; i<p_arr.length; i++){
+                p_cb(i,p_arr[i]);
+            }
+        }
+
+        var v_arr = ["로제", "제니", "지수", "리사"];
+        f_arrEach(v_arr, function(i,v){
+            if(v == "지수"){
+                v_arr[i] = "수지";
+            }
+        });
+        alert(v_arr);
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

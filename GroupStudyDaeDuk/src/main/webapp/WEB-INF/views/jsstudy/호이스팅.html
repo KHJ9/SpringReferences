@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script>
+    (() => {
+        alert("즉각 실행!!");
+    })();
+
+    const axios = {};
+    axios.getJson("./AJAX/data.txt")
+        .then(function(p_rslt){
+            
+        });
+
+    async function f_async(){
+		// await : 동기방식의 결과값 받아오는 구간
+		// async : 이를 선언한 함수는 비동기 함수가 된다.
+        let l_rslt = await axios.getJson("./AJAX_data.txt");
+        console.log("결과:", l_rslt);
+    }
+    f_async();
+    console.log("비동기보다 먼저 실행되는 이 코드");
+        
+</script>

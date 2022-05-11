@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #id_disp {
+            width : 200px;
+            height : 200px;
+            border : 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="id_disp">
+        요기에 파일을 끌어다 놓아라
+    </div>
+    <script>
+        var v_disp = document.querySelector("#id_disp");
+        
+        // built-in기능을 막으려면 dragover와 drop 기본 기능 둘 다 막아야 한다.
+
+        var f_dragOver = function(){
+            event.preventDefault(); // built-in기능 막깅
+            event.stopPropagation(); // 부모에 같은 이벤트가 있으면 막는다.
+            //console.log(event.dataTransfer.files);
+        }
+
+        var flag = false;
+        var f_file = function(p_file, p_length){
+            var v_fileReader = new FileReader();
+            v_fileReader.onload = function(){
+                var v_img = document.createElement("img");
+                v_img.src = v_fileReader.result;
+                v_img.width = 200/4;
+                v_img.height = 200/4;
+                if(!flag) { v_disp.textContent = null; flag = !flag; }
+                v_disp.appendChild(v_img);
+            }
+            v_fileReader.readAsDataURL(p_file);
+        }
+
+        var f_drop = function(){
+            event.preventDefault(); // built-in기능 막깅
+            event.stopPropagation(); // 부모에 같은 이벤트가 있으면 막는다.
+            var v_files = event.dataTransfer.files;
+            for(var i=0; i<v_files.length; i++){
+                f_file(v_files[i], v_files[i].length); // 파일 1개씩 처리하는 함수에
+            }
+        }
+
+        v_disp.addEventListener("dragover", f_dragOver);
+        v_disp.addEventListener("drop", f_drop);
+        window.addEventListener("dragover", f_dragOver);
+        window.addEventListener("drop", f_drop);
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script>
+// Over ES6을 꼭 준비해야 되는 시점
+// caniuse.com에서 항상 호환성을 확인하는 습관이 필요(취미가 아니고 일이라서)
+// 변수 선언 let, const  
+// let은 블락 scope변수.. 그동안 전역/지역으로만 나뉘는 것에 대한 불만 해소
+// const 상수개념 (약간의 오해들이 있음)
+
+//var vs let
+const c_aaa = "흥칫뿡";
+//c_aaa = "뽐빠라뿜"; 
+
+const c_obj = {
+    "name":"광국",
+    "hope":"널븐나라를 맹글겠썽"
+}
+
+c_obj.hope="어림도업썽";//?
+console.log(c_obj);
+
+
+var f_checkLet=function(){
+    for(let i=1; i<=10; i++){
+        console.log("여기선 읽혀용",i);
+    }
+    alert("체킁"+i);//? var와의 차이점을 명확히 인식!!
+} 
+//f_checkLet();
+</script>

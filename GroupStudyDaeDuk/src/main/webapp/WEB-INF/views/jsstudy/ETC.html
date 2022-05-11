@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #id_disp {
+            width: 200px;
+            height: 200px;
+            border: 1px solid black;
+        }
+    </style>
+    <script 
+        src="https://code.jquery.com/jquery-3.6.0.js" 
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" 
+        crossorigin="anonymous">
+    </script>
+</head>
+<body>
+    <!-- 
+        autofocus : 그 태그에 자동으로 포커스를 준다.
+        tabindex : 탭 키보드를 누르면 index순서에 따라 focus가 이동된다.
+                   -1은 tab키로 focus를 받지 않는다.
+     -->
+    순서1<input type="text" tabindex="1" id="id_txt"><br>
+    순서2<input type="text" tabindex="2" id="id_txt1"><br>
+    순서3<input type="text" tabindex="3" autofocus id="id_txt2"><br>
+    순서4<input type="text" tabindex="-1" id="id_txt3"><br>
+    순서5<input type="text" tabindex="6" id="id_txt4"><br>
+    순서6<input type="text" tabindex="5" id="id_txt5"><br>
+    <!-- 
+        focus 못 받는 아이들에게 focus를 너무나 주고 싶을 때
+        tabindex="0"를 작성하면 div와 같은 focus가 기본적으로 안 되는 태그에도 focus를 줄 수 있다.
+        0 : 포커스를 못 받는 태그에 포커스 기능을 주기 위한 번호 
+        contenteditable="true" : 일반 태그에도 텍스트를 입력하게끔 설정한다.
+    -->
+    <div contenteditable="true" id="id_disp" tabindex="0">여기 키보드 클릭</div>
+
+    <!-- 함수 안에 있는 함수는 바깥에서 부를 수 없다. -->
+    <!-- <a href="#" onclick="f_click()">누르숑</a> -->
+    
+    <!-- 
+        ! 주의 : 상시에 사용하는 함수들은 초기화 함수(지역함수로서) 안에 선언하지 말 것 
+        만약 그렇게 참조하면 외부에서 해당 함수들을 접근할 수 없다.
+        아래와 같이 '전역함수'의 경우 태그에서 접근할 수 있다.
+    -->
+    <a href="#" onclick="f_click_outer()">누르숑</a>
+    
+    <input type="button" value="눌러방" id="id_btn">
+    <script>
+        function f_click_outer(){ alert("clicked!"); }
+
+        // 초기화 함수, 크게 아래의 세 방식을 구분하여 사용하지 않아도 된다.
+        // 현재 이 문서가 로드되었을 때 
+        
+        $(function(){ // 초기화 함수 1
+            // 초기화 블럭
+            console.log(3+"번째로 옴");
+
+            function f_click(){ alert("clicked!"); }
+            document.querySelector("#id_btn").addEventListener("click", f_click);
+        });
+        
+        window.addEventListener("DOMContentLoaded", function(){ // 초기화 함수 2
+            console.log(1+"번째로 옴");
+        });
+        
+        window.addEventListener("load", function(){ // 초기화 함수 3
+            console.log(2+"번째로 옴");
+        });
+
+    </script>
+    <script>
+        // 스크립트로 객체에 포커스를 주는 방법 (focus())
+        document.querySelector("#id_txt1").focus();
+        var v_txt = document.querySelector("#id_txt");
+        var v_disp = document.querySelector("#id_disp");
+        var f_down = function(){
+            console.log(event.keyCode);
+        }
+        v_txt.addEventListener("keydown", f_down);
+        v_disp.addEventListener("keydown", f_down);
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+!! 스프링 설정정리
+
+1. STS(3914), Tomcat(v9), Tern(121), Maven Download
+2. STS 실행 후 (!!)Tern-Plugin(자바스크립트 자동완성) 설치
+3. STS 인코딩 설정 (UTF-8) from Preferences
+4. 새 프로젝트 Spring Legacy Project -> MVC Project 
+5. Marker/Problem 오류 해결 -> 프로젝트 우클릭
+     -> Preferences -> Project-Facets -> 버젼 맞춰줌(자바와, 다이나믹 웹 모듈(서블릿)) -> 서버 추가(Tomcat v9)
+6. pom.xml 수정 -> 자바버젼(${java-version}), build툴 버젼(최신으로)(
+    Servlet은 웬만하면 최신버젼으로 할 것), servlet 버젼
+    -> scope의 종류 compile(컴파일에도 사용, 배포에도 추가), runtime, provided, test
+7. web.xml(톰캣을 설정하는 파일) 에서 servlet 버젼 맞추기
+    https://fliedcat.tistory.com/65
+8. convert to tern project (프로젝트 우클릭 -> configure -> convert to tern project -> browser, jquery 체크)
+
+(꼭 연습해서 확실하게 기억할 수 있도룩 할 것)
+
+* 패키지명은 회사명을 거꾸로 한 것과 비슷하게 3단계로 작성한다.
+* pom.xml의 scope영역은 해당 단위업무 시에만 이 maven을 적용하겠다는 표시이다.
+* tern : 자바스크립트 자동완성 프로그램

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script>
+    //비동기 제어를 위해 나온 Promise
+    //현업에서 실제 비동기를 사용하다 보면 비동기 안에 비동기 안에 비동기...
+    //보통 비동기를 callback함수로 구현하다 보니, callback지옥이라 불리게 됨
+    //다행인건 개발자가 직접 Promise객체를 생성 구현할 일은 거의 없음
+    //필요한 라이브러리들이 내부적으로 Promise를 리턴해 줌
+
+    //첨엔 많이 낯설어용, 구조도 희안해 보여요
+    //하지만 엄칭 중요, 앞으론 이거 모르면 Front를 할 수 없음
+
+    //axios는 ajax와 동작은 같지만 Promise를 리턴하는 것이 다름!
+
+    var f_check = function(){
+		// resolve : fulfilled상태, 그러니까 성공한다고 가정했을 때의 실행하게 될 영역
+		// reject  : 실패한다고 가정했을 때의 실행하게 될 영역
+        return new Promise((resolve,reject)=>{
+            //resolve("약속이행");
+            reject("문제가 생겼어용ㅠㅠ");
+        });
+    }
+
+    f_check().then((p_rslt)=>{
+        console.log(p_rslt);
+    }).catch((p_err)=>{
+        console.log(p_err);
+    }).finally(()=>{
+        console.log("난 파이널 카운트");
+    });
+
+</script>

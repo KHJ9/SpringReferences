@@ -9,6 +9,7 @@
 	<!-- Sequence상 이런 건 @Component로 만들지 않는다. -->
 	<bean id="customAccessDeniedHandler" class="kr.or.ddit.security.CustomAccessDeniedHandler"></bean>
 	<bean id="customAuthenticationSuccessHandler" class="kr.or.ddit.security.CustomAuthenticationSuccessHandler"></bean>
+	<bean id="customUserDetailsService" class="kr.or.ddit.security.CustomUserDetailsService"></bean>
 	
 	<!-- 암호 인코딩을 위한 전용 객체 선언 -->
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
@@ -36,23 +37,34 @@
 			username-parameter="username" password-parameter="password"/>
 		
 		<!-- 로그아웃 경로를 어떻게 설정할 것인가 -->
-		<security:logout logout-url="/mylogout" invalidate-session="true"/>
+		<security:logout invalidate-session="false" logout-url="/mylogout"
+			delete-cookies="JSESSIONID,remember-me"/>
 		<!-- 로그아웃 거부 시 어디로 이동할 것인가 -->
 		<!-- <security:access-denied-handler error-page="/accessError"/> -->
 		<security:access-denied-handler ref="customAccessDeniedHandler"/>
 		<security:csrf disabled="true"/>
+		<security:session-management>
+			<!-- 한 컴퓨터에 허용되는 세션은 최대 1개, 1개를 넘으면 에러를 발생시킨다. -->
+			<!-- db연동, 3일동안 이 기록을 유지한다. -->
+			<security:concurrency-control
+				max-sessions="1" error-if-maximum-exceeded="true"/>
+		</security:session-management>
+		<security:remember-me data-source-ref="dataSource" 
+			token-validity-seconds="259200"/>
+			<!-- 259200 = 60*60*24*3 = 3일 -->
 	</security:http>
 
 	<!-- 인증관리자 설정 -->
 	<!-- erase-credentials : 자격확인서(기본적으로 로그인 시 자격확인서를 지우게 되어있다.) -->
 	<security:authentication-manager erase-credentials="false">
-		<security:authentication-provider>
+		<!-- user-service-ref : 인증정보를 담당하는 서비스 선언 -->
+		<security:authentication-provider user-service-ref="customUserDetailsService">
 			<!-- (웬만하면 이걸로 충분한데, 안 충분한 사람들이 있음. userdetails(사용자상세정보)) -->
 			<!-- db에 있는 계정테이블로 로그인을 시도하기 위한 선언 -->
 			<!-- db에 있는 계정테이블로 로그인을 시도하려면 인코딩을 꼭 거쳐야 한다. -->
-			<security:jdbc-user-service data-source-ref="dataSource"
+			<!-- <security:jdbc-user-service data-source-ref="dataSource"
 				users-by-username-query="SELECT USERID,USERPW,ENABLED FROM MYMEM WHERE USERID = ?"
-				authorities-by-username-query="SELECT USERID,USERAUTH FROM MYAUTH WHERE USERID = ?"/>
+				authorities-by-username-query="SELECT USERID,USERAUTH FROM MYAUTH WHERE USERID = ?"/> -->
 			<security:password-encoder ref="bcryptPasswordEncoder"/>
 			
 			<!-- db를 사용하지 않고 직접 계정 목록을 추가하는 경우 -->

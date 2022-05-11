@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 자바스크립트에서 함수의 입력매개변수(Parameter, Argument)
+        // 리턴타입은 뭐든(자바스크립트에서 지원하는 타입이라면) 가능
+        // 연습 안하면 도루묵
+        // JSON을 함수 입력으로
+        
+        function f_arg(p_banjang){
+            alert(p_bangang);
+        }
+
+        var f_myRoze = function(p_json){ // p_json = p_arg
+            p_json.print();
+            //p_json.msg = "새로운 메시지";
+            // console.log(p_arg); // 눈으로 확인
+            //console.log(p_json);
+
+            return {
+                group : "블랙핑크",
+                members : ["로제","제니","리사","지수"],
+                getMembers : function(){
+                    return this.members;
+                }
+            }
+        }
+
+        console.log(f_myRoze ({
+            print : function(){
+                alert("억지로 메소드 한개 넣었어용!");
+            }
+        }));
+
+        var v_obj = {} // 요런걸 보통 리터럴 표현이라고 부름
+        // ㄴ var v_obj = new Object();
+
+        var msg = "전역별수메세지";
+        var album = "나의 앨범";
+
+        var p_arg = {
+            msg:"블랙핑크로제 짱",
+            album:"Gone",
+            print:function(){
+                document.write(this.msg + this.album);
+            }
+        }
+
+        //f_myRoze(p_arg);
+        f_myRoze({
+            msg:"난 KGB",
+            album:"노래는 FBI 노래가 더 좋음",
+            print:function(){
+                document.write("변수에 담지 않고 매개변수를 생성해서 넘겨버림");
+            }
+        });
+
+        //f_myRoze.print();
+    </script>
+</body>
+</html>

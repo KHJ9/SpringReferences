@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script>
+    //나만의 배열을 만들어 볼테얌
+    var MyArray = function(){
+        this.length = 0;
+        return this;
+    }
+ 
+    MyArray.prototype.push = function(p_val){
+        this[this.length] = p_val;
+        this.length++;
+        return this; // 메소드 체이닝을 위함
+    }
+
+    MyArray.prototype.forEach = function(p_cb){
+       for(var i=0; i<this.length; i++){
+          p_cb(this[i],i);
+       }
+       return this; // 메소드 체인닝을 위함 this는 MyArray타입객체
+    }
+
+    MyArray.prototype.sort = function(p_cb){
+        if(typeof(p_cb) == "undefined"){
+            for(var i=0; i<this.length; i++){  // 가장 흔한 정렬 버블 정렬
+                for(var j=i+1; j<this.length; j++){
+                    if(this[i] > this[j]){
+                        var temp = this[i];
+                        this[i] = this[j];
+                        this[j] = temp
+                    }
+                }
+            }
+            return this;  // 여기서 끝내기
+        }
+    
+        for(var i=0; i<this.length; i++){  // 가장 흔한 정렬 버블 정렬
+            for(var j=i+1; j<this.length; j++){
+                if(p_cb(this[i], this[j]) > 0){
+                    var temp = this[i];
+                    this[i] = this[j];
+                    this[j] = temp
+                }
+            }
+        }
+        return this;  // 이것은 중요한 의미가 있음? 
+    }
+    var v_arr = new MyArray();
+    for(var i=1; i<=7; i++){
+        v_arr.push(Math.ceil(Math.random()*10));
+    }
+    console.log(v_arr);
+    console.log(v_arr.sort());
+    console.log(v_arr.push(13).push(15).push(20).sort(function(a,b){
+        return a-b;
+    }));
+
+
+    /*
+    v_arr.forEach(function(p_val,p_inx){
+        alert(p_inx + " => " + p_val);
+    })
+    */
+
+</script>

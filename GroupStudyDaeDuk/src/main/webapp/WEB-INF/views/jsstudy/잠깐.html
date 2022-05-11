@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<div id="id_disp"></div>
+<script>
+
+    var id_disp = document.querySelector("#id_disp");
+
+    // 만약 50~100사이의 값을 발생시킨다면
+    // 50 + (0 ~ 50)
+    function f_ranNum(p_start, p_end){
+        return Math.floor((Math.random() * (p_end - p_start + 1)) + p_start);
+    }
+
+    for(var i=1; i<=900; i++){
+        id_disp.innerHTML += f_ranNum(10, 100) + "<br>";
+    }
+
+    var v_arr = ["계림","지훈","민혁"];
+    v_arr.splice(1,1);
+    alert(v_arr);
+</script>

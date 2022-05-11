@@ -44,7 +44,7 @@ public class AccessController {
 	public String getBlue(Model model) {
 		log.info("Blue Access");
 		model.addAttribute("accessUser", "Blue");
-		return "blueaccess";
+		return "userDetailsCK";
 	}
 	
 }

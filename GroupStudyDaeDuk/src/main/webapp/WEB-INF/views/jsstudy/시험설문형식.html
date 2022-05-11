@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 선다형 형식 설문 또는 시험
+        const c_munsu = 1; // 20문제
+        const c_dahyung = 1; // 5지 선다형
+
+        const c_jungdaps = [];
+        for(let i=0; i<c_munsu; i++){ // 문제 수 만큼 정답
+            c_jungdaps.push(Math.ceil(Math.random()*c_dahyung)); // 가지수에 맞게
+        }
+
+        for(let i=1; i<=c_munsu; i++){
+            document.write("<h3>" + i + "번 문제</h3><hr>");
+            for(let j=1; j<=c_dahyung; j++)
+                document.write(j + "<input type=radio name=mun" + i + " value=" + j + ">");
+            document.write("<input type=hidden name=nm_jung style='color:white;' disabled value='"+c_jungdaps[i-1]+"'>");
+        }
+
+    </script>
+
+    <!-- 오늘의 과제
+        사용자가 채점 버튼을 누르면 맞은 갯수와 점수가 출력되고
+        hidden이 text로 바뀌고 그 안에 정답이 나오는데, 맞은 건 백그라운드 파랑, 
+        틀린 건 백그라운드 빨강, 글자색은 본인 맘대로 만들기 -->
+    <br><br><br>
+    맞은 갯수 : <input type="text" id="id_cnt" disabled><br>
+    맞은 점수 : <input type="text" id="id_jumsu" disabled><br>
+    <input type="button" id="id_eval" value="채점">
+
+    <script>
+        const btn_eval =  document.querySelector("#id_eval");
+        const arr_jung =  document.querySelectorAll("input[name=nm_jung]");
+        const inp_cnt =   document.querySelector("#id_cnt");
+        const inp_jumsu = document.querySelector("#id_jumsu");
+
+        btn_eval.onclick = function(){
+            let result = 0;
+            
+            for(let i=1; i<=c_munsu; i++){
+                const radi_dahyung = document.querySelector("input[name=mun"+i+"]:checked");
+                const jung = arr_jung[i-1];
+                jung.type = "text";
+                
+                let selection = parseInt(radi_dahyung.value);
+                let jungdap = parseInt(jung.value);
+
+                if(selection == jungdap) result++;
+                if(selection == jungdap) jung.style.backgroundColor = "blue";
+                if(selection != jungdap) jung.style.backgroundColor = "red";
+            }
+            
+            inp_cnt.value = result;
+            inp_jumsu.value = (result/c_munsu) * 100 + "점";
+        }
+    </script>
+
+</body>
+</html>

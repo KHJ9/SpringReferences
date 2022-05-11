@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<friends>
+    <friend>
+        <name>류진</name>
+        <age>20</age>
+        <chac>ota</chac>
+    </friend>
+    <friend>
+        <name>경송은</name>
+        <age>21</age>
+        <chac>ehe</chac>
+    </friend>
+    <friend>
+        <name>진예인</name>
+        <age>21</age>
+        <chac>uhm</chac>
+    </friend>
+</friends>

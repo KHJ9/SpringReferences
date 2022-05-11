@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script src="./jsp.js"></script>
+<script>
+
+    var v_title = request.getParameter("nm_title");
+    var v_writer = request.getParameter("nm_writer");
+    var v_content = request.getParameter("nm_content");
+    var v_skills = request.getParameterValues("nm_skills");
+    // 값을 잘 받아 왔으면 LocalStorage에 저장합시다.
+
+    var v_tblName = "Gesi"; // 일단 테이블명(key값)은 Gesi로 고정
+    // 따로 따로 저장하지 않고 1개의 객체로 묶기
+    var v_gul = new Map();
+    //var v_gul = {};
+    v_gul.pid = 1; // Primary Key 역할
+    v_gul.title = v_title;
+    v_gul.writer = v_writer;
+    v_gul.content = v_content;
+    v_gul.skills = v_skills;
+
+    // 처음 저장하는 글이냐, 이미 써진 글이 있느냐의 분리가 필요`
+    var v_gulDatas = new Array(); // v_gul을 담을 빈 배열 선언
+    if(localStorage.getItem(v_tblName)){ // 이미 글이 들어 있다면 일단 꺼내기
+        v_gulDatas = JSON.parse(localStorage.getItem(v_tblName));
+        v_gul.pid = v_gulDatas[v_gulDatas.length-1].pid + 1;
+    }
+
+    v_gulDatas.push(v_gul);
+
+    // 1개로 묶었으니 해당 객체를 저장하면 됨
+    // localstorage는 문자열 저장기능만 지원(객체는 Object라는 문자열로 저장됨)
+    // 그래서 복합객체의 경우 JSON형식으로 캐스팅하여 저장하기도 한다.
+    localStorage.setItem(v_tblName, JSON.stringify(v_gulDatas));
+
+    // 데이터를 계속 배열에 추가하여 로컬 스토리지에 저장하였다.
+
+    location.href="list.html"; // 서버에 다시 요청 안하고 캐쉬된 걸 사용할 수도 있음
+    //location.replace("list.html"); // 서버에 필히 다시 요청
+
+</script>
+
+
+
+
+
+
+

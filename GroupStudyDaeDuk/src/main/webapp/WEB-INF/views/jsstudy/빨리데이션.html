@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation(유효성검사)</title>
+</head>
+<body>
+    <!-- html에서 서버로 어떤 정보를 보내려면 꼭 form태그가 필요 -->
+    <!-- default 메소드는 get -->
+    <!-- name 속성 주는 걸 잊어버리는 사람이 많음 (name 속성 꼭 부여할 것) -->
+    <!-- ?뒤에 문자열을 보통 쿼리스트링(QueryString)이라고 부름 -->
+    <!-- ! 한 페이지 안에 여러 개의 form 태그를 만들어도 되나 form 태그 안에 form 태그를 작성할 수는 없다. -->
+    <!-- onsubmit : 보내기 직전에 발생하는 이벤트 -->
+    <form action="시작.html" method="get" onsubmit="return f_submit();">
+        아이디<input type="text" name="nm_id" id="id_id"><br>
+        암호<input type="password" name="nm_pw" id="id_pw"><br>
+        <input type="submit" value="전송">
+    </form>
+
+    <script>
+        // 원래 자바스크립트는 단순히 유효성체크를 위해서 출현했다.
+        // 서버로 값을 보내기 전에 사용자가 값을 입력했는지 체크하기 위해서 
+        var f_submit = function(){
+            var v_id = document.querySelector("#id_id");
+            var v_pw = document.querySelector("#id_pw");
+            if(!v_id.value){ // 빈 공백일 때
+                alert("id를 입력하시오");
+                v_id.focus();
+                return false;
+            }
+            if(!v_pw.value){ // 빈 공백일 때
+                alert("pw를 입력하시오");
+                v_pw.focus();
+                return false;
+            }
+
+            // 그외 경우 전송하기
+            return true;
+        }
+    </script>
+</body>
+</html>

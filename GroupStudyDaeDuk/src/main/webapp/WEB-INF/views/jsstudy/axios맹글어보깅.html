@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script>
+    //Promise가 callback지옥의 해결책으로 나와서 잠깐은 인정 받았지만
+    //개발자들은 then, then , then 지옥이당 쪼메밖에 안 나아졌다라고 불평
+    // 그 다음에 나온 것이  
+
+    //원래 AJAX
+    const ajax = function(){
+        const c_xhr = new XMLHttpRequest();
+        c_xhr.open("메소드","URL","비동기여부");
+        c_xhr.onreadystatechange = function(){
+            if(c_xhr.readyState== 4 && c_xhr.status == 200){
+                console.log(c_xhr.responseText);
+            }
+        }
+        c_xhr.send();
+    }
+
+    const axios = {}; //네임스페이스용 껍데기 객체
+    axios.getJson = function(p_url){
+        return new Promise((res,rej)=>{
+            const c_xhr = new XMLHttpRequest();
+            c_xhr.open("get",p_url,true);
+            c_xhr.onreadystatechange = function(){
+                if(c_xhr.readyState== 4 && c_xhr.status == 200){
+                    res(JSON.parse(c_xhr.responseText));
+                }
+            }
+            c_xhr.send();
+        });
+    }
+    
+    //가만히 잘 생각해 보면 엄청나게 좋은 세트(async await)임을 알 수 있음
+    async function f_async(){
+		// await()를 선언하면 받아온 Promise에서 value를 추출한다.
+        let l_rslt = await axios.getJson("./AJAX_data.txt");
+        console.log("결과:",l_rslt);
+    }
+    f_async(); // 쏘리 안 불렀네요
+    console.log("누가 누가 먼저 나오겡?");
+
+
+   /* 
+  axios.getJson("./AJAX/data.txt")
+       .then(function(p_rslt){
+         console.log("넘어온 값은: ",p_rslt);
+       }).finally(function(){
+           console.log("어렵디용?");
+       })
+*/
+ // async, await 키워드 Promise에 대한 
+ // 불만을 잠재우기 위해 출현(엄칭 긍정적 반응)
+ // 대체적으로 잘 만들었다는 평!
+ 
+</script>

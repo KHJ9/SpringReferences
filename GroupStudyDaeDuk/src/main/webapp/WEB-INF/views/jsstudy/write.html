@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1>아주 불품없는 게시판</h1>
+    <form action="write_action.html">
+        제목 : <input type="text" name="nm_title" value="장국영" required><br>
+        글쓰니 : <input type="text" name="nm_writer" value="장현서" required><br>
+        글쓰니 스킬(3개까지만 선택해주세요)<br>
+        <hr>
+        JS <input type="checkbox" name="nm_skills" value="js" checked>
+        스프링 <input type="checkbox" name="nm_skills" value="spring">
+        파이썬 <input type="checkbox" name="nm_skills" value="python" checked>
+        오라클 <input type="checkbox" name="nm_skills" value="oracle" checked><br>
+        <hr>
+        내용<br>
+        <textarea name="nm_content" rows="5" cols="40" required>정말 내용이에요</textarea>
+        <input type="submit" value="글쓰깅">
+    </form>
+</body>
+</html>

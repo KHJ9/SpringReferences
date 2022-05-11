@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script>
+    // 실제로 script에서 this는 다루기 어려움
+
+    // * this는 자신을 호출한 부모 객체가 된다.
+
+    // !! this 중요함
+
+    // 때문에 this는 window가 된다.
+    var f_check = function(p_arg1, p_arg2, p_arg3){
+        // 자바스크립트 커뮤니티의 말로는,
+        // call, apply, bind를 가지고 직접 this를 제어하라고 방법을 제시했다.
+        console.log(this); // 상황에 따라 가리키는 값이 바뀜.
+        console.log("매개변수", p_arg1, p_arg2, p_arg3);
+    }
+
+    // 실제로는 window에서 함수를 호출하는 것과 같다.
+    // window.f_check();
+    // f_check();
+
+    var v_obj = {name:"오세현 먹어도 안 쪄요"};
+    v_obj.myfunc = f_check;
+
+    // this는 v_obj가 된다.
+    //v_obj.myfunc();
+
+    // call : this가 될 매개변수를 넘긴다. 그 다음에 원래 들어가야 할 매개변수를 차례대로 넣으면 된다.
+    v_obj.myfunc.call(document, "진짜 매개변수1", "진짜 매개변수2", "진짜 매개변수3");
+
+    // apply : this가 될 매개변수를 넘긴다. 그 다음에 원래 들어가야 할 매개변수를 '배열'로 넣어야 한다.
+    v_obj.myfunc.apply(document, ["진짜 매개변수1", "진짜 매개변수2", "진짜 매개변수3"]);
+
+</script>
+
+
+
+
+
+
+
+
+

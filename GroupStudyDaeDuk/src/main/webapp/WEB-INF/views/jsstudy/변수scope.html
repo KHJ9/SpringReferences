@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script>
+    // js 변수 Scope(범위 Life Cycle)
+    // es6 버전은 잘 쓰이는 곳이 많지 않다. 주로 es5 버전을 사용한다.
+    // es5버젼과 es6 버젼(2015년 12월경일듯)
+    // var       let const
+    // var는 전역과 지역(function) scope만 있음
+    
+    var v_aa = "더울땐 찬길"; // 전역변수
+    var f_local = function(){
+        for(;;){ 
+            // ㄴ ! 여기 있는 {과 변수 범위는 관계없음 (그래서 for문을 벗어나도 지역변수 v_aa는 유지된다.)
+            // var는 function키워드 안에 있는가? 밖에 있는가만 구분하면 됨
+            // 전역변수와 지역변수의 변수명이 겹쳐도 허용된다.
+            var v_aa = "찬길 걸을땐 시원"; // 지역변수
+            break;
+        }
+        alert(v_aa);
+        f_local();
+    }
+</script>

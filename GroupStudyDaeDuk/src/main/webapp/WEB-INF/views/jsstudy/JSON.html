@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="id_div" style="border:2px solid black"></div>
+    <script>
+        // 최근 추세는 querySelector와 querySelectorAll을 많이 씀
+        //             특정 하나의 엘리먼트만, 관련된 엘리먼트 모두 가져옴
+        var v_div = document.querySelector("#id_div");
+
+        // 배열식 접근법을 사용하면 -같은 기호도 그대로 적어서 불러올 수 있다.
+        v_div.style["background-color"] = "black";
+        v_div.style["color"] = "yellow";
+        // 다음과 같이 불러오는 것도 가능
+        v_div.style.color = "yellow";
+        v_div.innerHTML = "<h1>로제 좋아요?</h1>"
+        alert(document.body.innerHTML);
+
+        // xml 보다 json이 용량이 더 적어 요즘에는 json이 많이 사용되고 있다.
+        // JSON -> JavaScript Object Notation(JS 객체 표기법)
+        // 넓은 의미로는 {}와 Array 포함 *이것이 정확
+        // 좁은 의미로는 {}만 지칭
+
+        // 네트워크로 데이터를 보낼 때 가장 적은 용량으로 보낼 수 있는 방식이다.
+        // CSV(Comma Seperated Value)
+        
+        // ex
+        // 이름,나이,별명
+        // 로제,25,베스트
+
+        var v_obj = {
+            name:"로제", // 속성 추가
+            age:25, // 속성 추가
+            getAge:function(){ // 메소드 추가
+                return age;
+            }
+        }
+
+        var name = "변수명";
+        // 배열 기호를 써서 속성명을 지정할 수도 있다.
+        var v_obj2 = {
+            ["name"]:"로제", // 속성 추가
+            [name]:"블랙핑크", // 속성 추가
+            ["age"]:25 // 속성 추가
+        }
+
+        // 속성 지우는 건 delete
+        delete v_obj2.age;
+
+        console.log(v_obj2);
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+

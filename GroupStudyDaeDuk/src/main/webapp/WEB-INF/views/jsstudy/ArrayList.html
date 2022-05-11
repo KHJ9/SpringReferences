@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script>
+    //자바의 ArrayList 클래스를 맹그시옹
+    // add, set, get,remove, clear 메소드 추가
+    var ArrayList = function(){
+        this.length = 0;
+        return this; // 없어도 되지만 명시적으로 표현
+    }
+    //메소드 추가는 prototype에 -> 메모리 쩔약
+    ArrayList.prototype.add = function(p_val){
+        this[this.length] = p_val; // 배열이 아니공, JSON의 배열식 접근법
+        this.length++; // 갯수 증가
+        return this;  // 메소드 체인닝을 위함 add(값).add(값)
+    }
+
+    ArrayList.prototype.set = function(p_index,p_val){
+        this[p_index] = p_val; // 덮어쓰깅(update)
+        return this; // 메소드 체이닝
+    }
+
+    ArrayList.prototype.get = function(p_index){
+        this[0]= this[p_index];// 맨앞으로 옮김
+        for(var i=1; i<this.length; i++){
+            delete this[i];  // 1~끝까지 다 지우깅
+        }
+        this.length = 1;
+        return this; // 메소드 체이닝
+    }
+
+    ArrayList.prototype.remove = function(p_index){
+        //delete this[p_index]; // 이걸로 만족?
+        for(var i=p_index; i<this.length-1; i++){
+            this[i] = this[i+1];
+        }
+        delete this[this.length -1]; // 마지막꺼 디움
+        this.length--;   // 지웠으니 카운트 감소
+        return this;
+    }
+    ArrayList.prototype.clear = function(){
+        for(var i=0; i<this.length; i++){
+            delete this[i];
+        }
+        
+        this.length =0;  // 모두 지웠으니 카운트 0
+        return this;  // 메소드 체인닝
+    }
+
+    // 껌증? 항상 자신을 의심해야 함(난 허술하당)
+    var v_test = new ArrayList();
+    v_test.add(1).add(9).add(15).set(2,"조현");
+    //console.log(v_test);
+    console.log(v_test.get(2).add(272).add(99)); //15
+    console.log(v_test.remove(1));
+    console.log(v_test.get(1)[0]);
+
+
+
+
+ 
+</script>

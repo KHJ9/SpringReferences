@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #id_ball {
+            width : 50px;
+            height : 50px;
+            background-color : red;
+            border-radius : 50%; /* 50%면 동그라미가 된다. */
+        }
+
+        #id_bar {
+            position : absolute;
+            width : 200px;
+            height : 25px;
+            background-color : blueviolet;
+        }
+    </style>
+</head>
+<body>
+    <input type="button" value="눌러방" onclick="f_move()">
+    <input type="button" value="세워방" onclick="f_stop()">
+    <div id="id_ball" style="position:absolute;left:0px;top:100px;"></div>
+    <div id="id_bar" style="position:absolute;left:10px;top:600px;"></div>
+    <script>
+
+        // 추가문제 : 눌러방 버튼을 계속 눌러도 속도가 유지될 수 있도록 할 것
+        // (모범답안이 있으니 생각해볼 것)
+
+        var v_ball = document.querySelector("#id_ball");
+        var v_bar = document.querySelector("#id_bar");
+        var v_mvWidth = 10; // 이동폭
+        var v_mvHeight = 10; // 이동폭
+        var v_wndWidth = parseInt(window.innerWidth);
+        var v_wndHeight = parseInt(window.innerHeight);
+        var v_timerId;
+
+        /* var v_width = parseInt(v_ball.style.left);
+        var v_right = parseInt(v_ball.style.left) + 50; */
+        function f_move(){
+
+            // 문제, 오른쪽에 닿으면 방향을 틀도록 한다.
+            if (v_wndWidth < parseInt(v_ball.style.left) + 50) {
+                v_mvWidth = -v_mvWidth;
+            } else if (parseInt(v_ball.style.left) + 50 < 0) {
+                v_mvWidth = -v_mvWidth;
+            }
+
+            if (v_wndHeight < parseInt(v_ball.style.top) + 25) {
+                v_mvHeight = -v_mvHeight;
+            } else if (parseInt(v_ball.style.top) < 0) {
+                v_mvHeight = -v_mvHeight;
+            } 
+            
+            if (parseInt(v_bar.style.top) - parseInt(v_ball.style.top)-50 <= 15 &&
+                parseInt(v_bar.style.top) - parseInt(v_ball.style.top)-50 >= -75) {
+                //console.log(parseInt(v_bar.style.left)+100 - parseInt(v_ball.style.left)-25);
+                if(parseInt(v_bar.style.left) <= parseInt(v_ball.style.left)+25 && 
+                    parseInt(v_bar.style.left)+175 >= parseInt(v_ball.style.left)-25){
+                    v_mvHeight = -v_mvHeight;
+                }
+            }
+
+            // v_ball.style.left는 'npx'이라는 문자열 값을 불러오므로 이를 숫자형으로 변환해주어야 한다.
+            v_ball.style.left = parseInt(v_ball.style.left) + v_mvWidth + "px";
+            v_ball.style.top= parseInt(v_ball.style.top) + v_mvHeight + "px";
+            
+            // 함수 '포인터'를 작성해준다. // 타이머 발생기
+            if(v_timerId == null)
+                v_timerId = setInterval(f_move,25); // 시간 마다 반복해서 발생
+            // setTimeout(f_move,15); // 한 번만 발생
+        }
+        function f_stop(){
+            clearTimeout(v_timerId); // 타이머 없애기
+            v_timerId = null;
+        }
+        // window size 변경 이벤트
+        window.addEventListener("resize", function(){
+            //console.log(parseInt(window.innerWidth)); // 변경값 확인
+            v_wndWidth = parseInt(window.innerWidth);
+        });
+
+        // Q : keydown, keypress의 차이에 대해 알아보기
+
+        // 무조건 console.log()를 통해 값을 확인하는 것이 중요!
+
+        var f_keyDown = function(){
+            //alert(event.keyCode); // 키값 확인
+            //alert(event.key); // 요게 조금 나중꺼(더 자세하게 알 수 있음)
+            
+            // 왼쪽 키 눌렀을 때
+            if(event.keyCode == 37){
+                v_bar.style.left = parseInt(v_bar.style.left) - 35 + "px";
+            }
+
+            // 위쪽 키 눌렀을 때
+            if(event.keyCode == 38){
+                v_bar.style.top = parseInt(v_bar.style.top) - 15 + "px";
+            }
+
+            // 오른쪽 키 눌렀을 때
+            if(event.keyCode == 39){
+                v_bar.style.left = parseInt(v_bar.style.left) + 35 + "px";
+            }
+
+            // 아래쪽 키 눌렀을 때
+            if(event.keyCode == 40){
+                v_bar.style.top = parseInt(v_bar.style.top) + 15 + "px";
+            }
+
+        }
+
+        window.addEventListener("keydown", f_keyDown);
+
+        //alert(window.innerHeight); // 사용자가 보는 윈도우높이
+        //alert(window.innerWidth); // 사용자가 보는 윈도우넓이
+    </script>
+</body>
+</html>

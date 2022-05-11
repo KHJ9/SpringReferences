@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: url(./galaxy.jpg);
+            background-size: 100vw;
+            overflow : hidden;
+        }
+
+        #container {
+            position : relative;
+            width : 100vw;
+            height : 100vh;
+            margin : 0 auto;
+        }
+
+        #id_sun {
+            position : absolute;
+            width : 120px;
+            height : 120px;
+            display : inline-block;
+            border-radius: 50%;
+            overflow : hidden;
+        }
+
+        #id_earth {
+            position : absolute;
+            width : 70px;
+            height : 70px;
+            display : inline-block;
+            border-radius: 50%;
+            overflow : hidden;
+        }
+
+        #id_moon {
+            position : absolute;
+            width : 35px;
+            height : 35px;
+            display : inline-block;
+            border-radius: 50%;
+            overflow : hidden;
+        }
+
+        #id_sun * {
+            width : 120px;
+            height : 120px;
+        }
+
+        #id_earth * {
+            width : 70px;
+            height : 70px;
+        }
+
+        #id_moon * {
+            width : 35px;
+            height : 35px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="id_sun">
+            <img src="sun.jpg" alt="태양">
+        </div>
+        <div id="id_earth">
+            <img src="earth.jpg" alt="지구">
+        </div>
+        <div id="id_moon">
+            <img src="moon.jpg" alt="달">
+        </div>
+    </div>
+    <script>
+        // 태양이 화면 중앙에 오도록 합니다.
+        // Math.PI = 180deg     -> 1 라디안 = 180/Math.PI -> 1 도 -> 
+        let sun_gakdo = 0;
+        let earth_gakdo = 0;
+        let moon_gakdo = 0;
+        const radius1 = 200;
+        const timeInterval = 120;
+        const container = document.querySelector("#container");
+        const sun = document.querySelector("#id_sun");
+        const earth = document.querySelector("#id_earth");
+        const moon = document.querySelector("#id_moon");
+
+        function f_sunRotate(){
+            sun_gakdo = (sun_gakdo + 1) % 360;
+            sun.style.transform = "rotate(" + sun_gakdo + "deg)";
+            setTimeout(f_sunRotate, timeInterval-50);
+        }
+
+        function f_earthRotate(){
+            earth_gakdo = (earth_gakdo + 2) % 360;
+            earth.style.left = (window.innerWidth/2 - 35) + radius1 * Math.cos(Math.PI/180 * earth_gakdo) + "px";
+            earth.style.top = (window.innerHeight/2 - 35) + radius1 * Math.sin(Math.PI/180 * earth_gakdo) + "px";
+            earth.style.transform = "rotate(" + earth_gakdo + "deg)";
+            setTimeout(f_earthRotate, timeInterval-95);
+        }
+
+        function f_moonRotate(){
+            moon_gakdo = (moon_gakdo + 2) % 360;
+            let left = parseInt(earth.style.left.substring(0, earth.style.left.length-2));
+            let top = parseInt(earth.style.top.substring(0, earth.style.top.length-2));
+            moon.style.left = (left + 17.5) + (radius1 - 120) * Math.cos(Math.PI/180 * moon_gakdo) + "px";
+            moon.style.top = (top + 17.5) + (radius1 - 120) * Math.sin(Math.PI/180 * moon_gakdo) + "px";
+            moon.style.transform = "rotate(" + moon_gakdo + "deg)";
+            setTimeout(f_moonRotate, timeInterval-199);
+        }
+
+        function init(){
+            sun.style.left = window.innerWidth/2 - 60 + "px";
+            sun.style.top = window.innerHeight/2 - 60 + "px";
+            f_sunRotate();
+            f_earthRotate();
+            f_moonRotate();
+            console.log(earth.style);
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>

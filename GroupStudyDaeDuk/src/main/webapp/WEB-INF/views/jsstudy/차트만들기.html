@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>차트그리기</title>
+    <style>
+        #board {
+            width : 800px;
+            height : 300px;
+            border : 1px solid orange;
+            position : relative;
+        }
+
+        #chart {
+            width : 50px;
+            float : left;
+        }
+    </style>
+</head>
+<body>
+    <div id="board">
+    </div>
+    <br>
+    <br>
+    <input type="text" id="id_txt" value="100,200,300,400,500">
+    <input type="button" id="id_btn" value="차트그리기">
+
+    <script>
+        const brd = document.querySelector("#board");
+        const txt = document.querySelector("#id_txt");
+        const btn = document.querySelector("#id_btn");
+        
+        function draw(){
+            let text = txt.value;
+            let values = text.split(",");
+
+            brd.innerHTML = '';
+            
+            let largest = 0;
+            for(let i in values){
+                if(values.length >= i){
+                    let value = parseInt(values[i]);
+                    if(value >= largest) largest = value;
+                }
+            }
+            
+            for(let i in values){
+                if(values.length >= i){
+                    let value = parseInt(values[i]);
+                    let bar = document.createElement("div");
+                    let percent = document.createElement("span");
+                    bar.id = "chart";
+                    bar.style.position = "absolute";
+                    bar.style.top = "0";
+                    bar.style.left = 20+(i*80)+"px";
+                    bar.style.height = ((value/largest)*100) + "%";
+                    let a = Math.ceil(Math.random()*255);
+                    let b = Math.ceil(Math.random()*255);
+                    let c = Math.ceil(Math.random()*255);
+                    bar.style.backgroundColor = "rgb("+a+","+b+","+c+")";
+                    percent.textContent = ((value/largest)*100);
+                    percent.style.position = "absolute";
+                    percent.style.bottom = "-30px";
+                    percent.style.left = 35+(i*80)+"px";
+                    brd.appendChild(bar);
+                    brd.appendChild(percent);
+                }
+            }
+        }
+
+        btn.addEventListener("click", draw);
+    </script>
+</body>
+</html>

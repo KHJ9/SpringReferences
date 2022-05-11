@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script type="module">
+    //ES6이상 부터는 네임스페이스 개념보다는 모듈개념을.
+    //import 문은 module 안에서만 사용할 수 있당(곧 영역이 나뉘게 되지용)
+    //default는 그냥 이름 지정하면 받아짐
+    //as를 이용해서 이름 변경
+    //규모가 커지면 정리를 잘 하라는 압박 (안하면 나중에 힘들엉)
+    // nodejs를 쓰면 require를 쓸 수도 있음
+    // commonjs(스크립트커뮤니티) 모듈은 require 사용
+    // ESM(EcmaScript Module) 은 import 사용 (이게 표준)
+    // 요기까지 하면 대략적인 현재까지 지원되는 JS의 대표기능은 확인한 걸로 
+
+    import merong from "./sample.js"; // 수입하깅
+    console.log(merong);
+    //merong(); // 실행
+    import { c_obj2 as jenni } from "./sample.js";
+    console.log(jenni);
+
+    //뭉텡이로 가져오기
+    import * as grim from "./sample.js";
+    console.log(grim);
+    console.log(grim.c_obj1);
+    console.log(grim.c_obj2);
+    console.log(grim.default);
+    grim.default();
+
+
+</script>
+.

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="id_txt" value="나의로제" />
+        
+    <script>
+        // ! 복사와 참조를 잘 구별할 것!
+
+        // 원시타입은 속성과 메소드가 없다.
+        // 태그 요소들의 경우 별도의 변수를 만들어 거기다 넣어서 사용하면 편하다.
+        // 참조방식의 사용. 코드를 간결하게 만들 수 있다.
+        var v_check = document.querySelector("#id_txt");
+        v_check.value = "나의 제니";
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 함수를 리턴하는 함수 (기억 못할 수도 있으니, 나중에 한 번 더 볼 것)
+        var calculator = function(p_pop){
+            if(p_pop == "+"){
+                // 함수를 return에 선언해도 함수를 지정한 것이나 다름없다.
+                return function(a,b){
+                    return a+b;
+                }
+            }
+
+            if(p_pop == "-"){
+                return function(a,b){
+                    return a-b;
+                }
+            }
+        }
+        
+        var f_add = calculator("+");
+        alert(f_add(3,4));
+        var f_minus = calculator("-");
+        alert(f_minus(7,4));
+    </script>
+</body>
+</html>

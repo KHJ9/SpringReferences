@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>하트 맹글기</title>
+<style>
+    #myHeart {
+        border: 5px solid pink;
+        /* position: static; 브라우저가 알아서 배치하도록 함 */
+        position: relative; /* absolute자식의 부모 역할 */
+        /* position: absolute; 왼쪽 모서리를 기준으로 움직인다. */
+        /* position: fixed; 브라우저를 기준으로 고정한다. */
+        left: 100px; top: 100px;
+        width: 100px; height: 100px;
+
+        /* relative, absolute의 관계는 많이 사용되므로 기본적으로 알아두는 것이 좋다. */
+    }
+
+    .right {
+        position: absolute;
+        width:100px; height:100px;
+        background-color: red;
+        border-radius: 50%; /* 모서리가 둥글게 */
+    }
+
+</style>
+</head>
+<body>
+    <div id="myHeart">
+        <div class="right"></div>
+    </div>
+    <script>
+        for(var i=1; i<=30; i++){
+            document.write("<h1>오늘은 금요일</h1>")
+        }
+        var v_heart = document.querySelector("#myHeart");
+        v_heart.style.left = "1300px";
+
+        // div.appendChild(v_heart); // 특정 태그에 다음과 같은 내용을 담는다.
+    </script>
+</body>
+</html>

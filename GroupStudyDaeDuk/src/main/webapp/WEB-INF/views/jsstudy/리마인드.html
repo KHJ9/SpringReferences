@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<body>
+    <input type="button" id="id_btn" value="bind기억나닝?">
+</body>
+<script>
+var v_btn = document.querySelector("#id_btn");
+//v_btn.setAttribute("type","radio");
+// alert(v_btn.getAttribute("type"));
+alert(v_btn.type);
+v_btn.type = "radio";
+
+localStorage.setItem("aaa","bbb");
+localStorage.aaa = "bbb";
+
+var f_this = function(p_arg,p_arg1){ 
+    alert(p_arg + " : " + p_arg1);
+    console.log(this); //?
+}
+//함수 실행기호 ()를 붙일 수 없을 때 bind를 기억한당
+v_btn.addEventListener("click",
+     f_this.bind({name:"경송은"},"흥","뿡"))
+
+//call, apply, bind
+//f_this.call(document,"난매개1","매개2"); // 매개변수 순서에 주의
+/*
+f_this.apply({
+    name:"오세현",
+    alias:"모기 아퍼 모기에게 모기약 주었더니 제 모기 나았어요"
+},["매렁1","매렁2"]); // 매개변수 순서에 주의
+*/
+</script>

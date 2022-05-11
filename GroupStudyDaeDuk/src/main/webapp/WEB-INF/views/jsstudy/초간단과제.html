@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script 
+        src="https://code.jquery.com/jquery-3.6.0.js" 
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" 
+        crossorigin="anonymous">
+    </script>
+    <style>
+        #clock {
+            font-size : 50px;
+            color : white;
+            background-color : lime;
+            font-family: normal;
+        }
+    </style>
+</head>
+<body>
+    <div id="clock"></div>
+    <script>
+        function tick(){
+            // '서버'시간을 읽어와서 강제 세팅(서버시간으로 통일)
+            var today = new Date("2022-02-28");
+            var nd = "";
+            var hour = "";
+
+            if(today.getHours() >= 12){
+                nd = "오후 ";
+                hour = today.getHours() - 12
+                if(hour == 0) hour = 12;
+            }
+
+            if(today.getHours() < 12){
+                nd = "오전 ";
+                hour = today.getHours() - 12
+                if(hour == 0) hour = 12;
+            }
+
+            var time = nd + hour + ":" + today.getMinutes() + ":" + today.getSeconds();
+            document.querySelector("#clock").innerHTML = time;
+        }
+
+        $(function(){
+            setInterval(tick, 100); // 1초마다 실행
+        });
+    </script>
+</body>
+</html>

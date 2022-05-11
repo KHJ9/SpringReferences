@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<body>
+    <input type="button" id="id_btn" value="눌러방방">
+</body>
+<script>
+    
+    // 함수 추상화 1
+    /* 요건 쪼금 배웠다는 사람은 다 할 수 있는거
+    var myPrint = function(p_msg){
+        document.write(p_msg+"<br>");
+    } 
+    */
+
+    // 함수 추상화 2
+    // 참조(Reference)를 이해하는 사람이 생각할 수 있는 방법
+    var myPrint = document.write;
+    // myPrint("<h1>난 누가뭐래도 최고당</h1>");
+    
+    // 함수 추상화 3
+    // 2번과 같이 작성하면 this 기준이 바뀌어버리므로 함수가 정상동작되지 않는다.
+    myPrint.call(document, "<h1>난 누가뭐래도 최고당</h1>");
+    // 그래서 다음과 같이 this를 별도로 설정해주어야 한다. 하지만 사용할 때마다 this매개변수를 지정해 주어야 한다.
+    
+    // 함수 추상화 4 (결론)
+    var myPrint2 = document.write.bind(document);
+    myPrint2("<h1>난 누가뭐래도 최고당2</h1>");
+    // 그래서 this 매개변수를 bind함수를 통해 미리 지정을 하면 별도로 this 매개변수를 지정하지 않아도 된다.
+
+    // ===============================================
+
+    // bind 첨엔 헷깔림
+    var v_btn = document.querySelector("#id_btn");
+    var f_click = function(p_arg){
+        console.log("this가 될 매개변수 : ", this);
+        alert(p_arg);
+    }
+
+    // ! bind는 매개변수가 있는 함수를 이벤트에 바인딩할 때 사용한다. 바인드 용 함수
+    // bind 함수에는 반드시 this용 매개변수를 입력해야 한다.
+    v_btn.addEventListener("click", f_click.bind("this가 될 매개변수", "진짜 매개변수1", "진짜 매개변수2"));
+
+
+</script>
