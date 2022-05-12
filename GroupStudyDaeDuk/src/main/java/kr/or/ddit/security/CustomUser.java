@@ -1,5 +1,6 @@
 package kr.or.ddit.security;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +12,9 @@ import org.springframework.security.core.userdetails.User;
 import kr.or.ddit.domain.AuthVO;
 import kr.or.ddit.domain.MemberVO;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Getter // 외부에서 MemberVO를 읽어들이기 위해 Getter를 선언했다.
 public class CustomUser extends User {
 
@@ -31,12 +34,36 @@ public class CustomUser extends User {
 		super(vo.getUserid(), vo.getUserpw(), 
 			vo.getAuthList().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuth())).collect(Collectors.toList()));
 		
-		List<AuthVO> myAuthList = vo.getAuthList();
+		List<SimpleGrantedAuthority> ckList = 
+			vo.getAuthList().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuth())).collect(Collectors.toList());
+		
+		// 시간 날 때 stream 어렵지 않으니, 한 번 손에 익히기
+		// 중간 오퍼레이션 함수와 종료 오퍼레이션 함수만 잘 구분해서
+		// 위 stream 방식을 일반 반복문으로 처리시.
+		List<AuthVO> myList = vo.getAuthList();
+		List<SimpleGrantedAuthority> ck2List = new ArrayList<SimpleGrantedAuthority>();
+		
+		for (AuthVO authVO : myList) {
+			ck2List.add(new SimpleGrantedAuthority(authVO.getAuth()));
+		}
+		
+		log.info("stream result : " + ckList);
+		log.info("just check : " + ck2List);
 		
 		this.member = vo;		
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

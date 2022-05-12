@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.mapper.TestMapper;
 
-@Service
+@Service // Service를 붙이지 않으면 나중에 동작하지 않는다.
 public class SimpleServiceImpl implements SimpleService {
 
 	@Autowired
