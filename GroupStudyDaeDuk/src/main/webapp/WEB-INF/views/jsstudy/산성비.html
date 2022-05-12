@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *  {
+            margin : 0;
+            padding : 0;
+            font-family : Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        #wrapper {
+            margin : 0 auto;
+            width : 500px;
+            height : 550px;
+            border : 5px solid pink;
+            position : relative;
+            overflow : hidden;
+        }
+
+        #tjin {
+            position : absolute;
+            width : 100%;
+            height : 50px;
+            bottom : 1px;
+        }
+
+        #id_txt {
+            width : 70%;
+            height : 50px;
+            font-size : 20px;
+            text-align : right;
+        }
+
+        #id_btn {
+            width : 28%;
+            height : 50px;
+            border : 1px solid black;
+            font-size : 20px;
+        }
+
+        #tjbg {
+            height : 495px;
+            width : 100%;
+            border : 1px solid black;
+        }
+
+        .txt {
+            position : absolute;
+            background-color : black;
+            color : yellow;
+        }
+    </style>
+</head>
+<body>
+    <h1>산성비</h1>
+    <div id="wrapper">
+        <div id="tjbg"></div>
+        <div id="tjin">
+            <input type="text" id="id_txt">
+            <input type="button" id="id_btn" value="시작">
+        </div>
+    </div>
+    <script>
+        var v_tjbg = document.querySelector("#tjbg");
+        var v_txt = document.querySelector("#id_txt");
+        var v_btn = document.querySelector("#id_btn");
+        var v_moveWords = []; // 움직이고 있는 단어만 담을 빈배열
+
+        var f_ranGakdo = function(){
+            return "rotate(" + Math.floor(Math.random()*360) + "deg)";
+        }
+
+        var f_keydown = function(){
+            if(event.keyCode == 13){ // enter key
+                var v_userInput = v_txt.value;
+                for(var i=0; i<v_moveWords.length; i++){
+                    if(v_moveWords[i].innerHTML == v_userInput){
+                        v_moveWords[i].style.top = "-50px";
+                        v_moveWords[i].setAttribute("id", "none"); // 임시
+                        v_moveWords.splice(i,1); // 해당 div를 배열에서 열외
+                        v_txt.value = "";
+                        break;
+                    }
+                }
+            }
+        }
+        v_txt.addEventListener("keydown", f_keydown);
+
+        // 랜덤 단어 선택 함수
+        var f_selWords = function(){
+            var flag = true;
+            var v_ranNum = Math.ceil(Math.random()*members.length);
+            var v_ranWord = document.querySelector("#word"+v_ranNum);
+            for(var i=0; i<v_moveWords.length; i++)
+                if(v_moveWords[i] == v_ranWord) flag = false;
+            if(flag && v_ranWord != null){
+                var v_ranLef = Math.ceil(Math.random()*400);
+                v_ranWord.style.left = v_ranLef + "px";
+                v_moveWords.push(v_ranWord);
+            }
+            setTimeout(f_selWords, 300);
+        }
+
+        // 배열에 담은 글자들을 아래로 움직임
+        var f_moveWords = function(){
+            for(var i=0; i<v_moveWords.length; i++){
+                var v_ranSpeed = Math.ceil(Math.random()*5); // 1~10
+                v_moveWords[i].style.top = 
+                    parseInt(v_moveWords[i].style.top) + v_ranSpeed + "px";
+                v_moveWords[i].style.transform = f_ranGakdo();
+                if(parseInt(v_moveWords[i].style.top) >= 495)
+                    v_moveWords[i].style.top = "-10px";
+            }
+            setTimeout(f_moveWords, 10);
+        }
+
+        var f_start = function(){
+            f_selWords();
+            f_moveWords();
+            v_txt.focus();
+        }
+        v_btn.onclick = f_start;
+
+        var randRgv = function(){
+            var r = Math.ceil(Math.random()*256);
+            var g = Math.ceil(Math.random()*256);
+            var b = Math.ceil(Math.random()*256);
+            return "rgb("+r+","+g+","+b+")"; 
+        }
+
+        // 글자를 랜덤하게 고르는 함수랑
+        // 글자를 아래방향으로 움직이는 함수를 구분하면 좋음 역할 분담
+        // 역할 분담을 하면 중간 
+
+        var members = "오세현,김현준,조현,한찬길,김민혁,"+
+                      "경송은,김지훈,이계림,류진,신재호,"+
+                      "임희수,박솔재,한정수,김정선,김정진,"+
+                      "진예인,김희정,박경신,김예은,장윤서,"+
+                      "조윤주,김치훈,김광국,장현서";
+        members = members.split(",");
+        
+        // 제어하기 편하게 div element로 만들기
+        for(var i=0; i<members.length; i++){
+            var v_div = document.createElement("div");
+            v_div.innerHTML = members[i];
+            v_div.style.color = "white";
+            v_div.style.backgroundColor = randRgv();
+            v_div.setAttribute("class", "txt");
+            v_div.setAttribute("id", "word"+(i+1));
+            v_div.style.top = "-50px";
+            v_tjbg.appendChild(v_div);
+        }
+    </script>
+</body>
+</html>

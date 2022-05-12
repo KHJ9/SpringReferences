@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>작성란</title>
+	<title>게시글</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
@@ -14,7 +14,8 @@
             padding-top : 100px;
         }
         
-        #writeBtn {
+        #btns {
+        	display : inline-block;
             float : right;
         }
 	</style>    
@@ -22,18 +23,27 @@
 <body>
 	<div class="container">
         <h2>간이 게시판</h2>
-        <p>작성란</p> 
-        <form id="writeForm" onsubmit="<%=request.getContextPath()%>/board/doWrite" method="post">
-	        <div id="titleDiv" class="form-group">
-	            <label for="title">제목:</label>
-	            <input id="title" type="text" class="form-control" id="title">
-	        </div>
-			<div id="contentDiv" class="form-group">
-				<label for="content">내용:</label>
-				<textarea class="form-control" rows="5" id="content"></textarea>
-			</div>
-			<button id="writeBtn" type="button" class="btn btn-success">글쓰기</button>
-		</form>
+        <p>게시글</p> 
+        <table id="viewTable" class="table">
+		    <tbody>
+		    	<tr>
+			        <th class="col-md-2">제목</th>
+			        <td class="col-md-10">최종 프로젝트</td>
+		      	</tr>
+			    <tr>
+			        <th>작성자</th>
+			        <td>김현준</td>
+			    </tr>
+			    <tr>
+			        <th>내용</th>
+			        <td>빨리 취업하고 싶다.</td>
+			    </tr>
+		    </tbody>
+		</table>
+		<div id="btns" class="container-fluid">
+			<button id="updateBtn" type="button" class="btn btn-primary">수정</button>
+			<button id="deleteBtn" type="button" class="btn btn-danger">삭제</button>
+		</div>
     </div>
 </body>
 </html>

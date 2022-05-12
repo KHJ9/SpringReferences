@@ -24,10 +24,16 @@ public class BoardController {
 		return "board/writeBoard";
 	}
 	
-	@GetMapping("/doWrite")
+	@PostMapping("/doWrite")
 	public String doWrite() {
 		log.info("게시물을 작성합니다.");
 		return "board/writeBoard";
+	}
+	
+	@GetMapping("/viewBoard")
+	public String viewBoard() {
+		log.info("특정 게시물을 조회합니다.");
+		return "board/viewBoard";
 	}
 	
 	@PostMapping("/insertBoard")
