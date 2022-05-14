@@ -1,3 +1,4 @@
+<%@page import="kr.or.ddit.domain.BoardVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -14,7 +15,7 @@
             padding-top : 100px;
         }
         
-        #writeBtn {
+        #writeBtn, #updateBtn {
             float : right;
         }
 	</style>    
@@ -23,18 +24,34 @@
 	<div class="container">
         <h2>간이 게시판</h2>
         <p>작성란</p> 
-        <form id="writeForm" action="<%=request.getContextPath()%>/board/writeBoard" method="post">
+        <% BoardVO board = (BoardVO)request.getAttribute("board"); %>
+        <form id="writeForm" method="post">
 	        <div id="titleDiv" class="form-group">
 	            <label for="title">제목:</label>
-	            <input id="title" type="text" name="boardTitle" class="form-control" id="title">
+	            <input id="title" type="text" name="boardTitle" class="form-control" id="title"
+	            	value = "<%if(board!=null){out.print(board.getBoardTitle());}%>">
 	        </div>
 			<div id="contentDiv" class="form-group">
 				<label for="content">내용:</label>
-				<textarea class="form-control" name="boardContent" rows="5" id="content"></textarea>
+				<textarea class="form-control" name="boardContent" rows="5" id="content"><%if(board!=null){out.print(board.getBoardContent());}%></textarea>
 			</div>
 			<input type="hidden" name="boardWriter" value="<sec:authentication property="principal.username"/>">
-			<button id="writeBtn" type="submit" class="btn btn-success">글쓰기</button>
+			<input type="hidden" name="boardNum" 
+				value="<%if(board!=null){out.print(board.getBoardNum());}%>">
+			<% if(board==null) { %>
+				<button id="writeBtn" type="submit" class="btn btn-success">글쓰기</button>
+			<% } else { %>
+				<button id="updateBtn" type="submit" class="btn btn-primary">수정</button>
+			<% } %>
 		</form>
+		<script>
+			const writeForm = document.querySelector("#writeForm");
+			<% if(board==null) { %>
+				writeForm.action="<%=request.getContextPath()%>/board/writeBoard";
+			<% } else { %>
+				writeForm.action="<%=request.getContextPath()%>/board/updateBoard";
+			<% } %>
+		</script>
     </div>
 </body>
 </html>

@@ -51,7 +51,9 @@
 			const deleteBtn = document.querySelector("#deleteBtn");
 			const boardNum = '<%=board.getBoardNum()%>';
 			
-			updateBtn.onclick = location.href="<%=request.getContextPath()%>/board/updateBoard?boardNum=<%=board.getBoardNum()%>";
+			updateBtn.onclick = function(){
+				location.href="<%=request.getContextPath()%>/board/updateBoard?boardNum=<%=board.getBoardNum()%>";
+			}
 			
 			deleteBtn.onclick = function(){
 				var formData = new FormData();

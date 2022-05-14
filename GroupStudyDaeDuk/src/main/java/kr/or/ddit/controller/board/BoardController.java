@@ -59,11 +59,20 @@ public class BoardController {
 	
 	@GetMapping("/updateBoard")
 	public String updateBoard(Model model, String boardNum) {
-		log.info("특정 게시물을 수정합니다.");
+		log.info("게시물을 수정란으로 이동합니다.");
 		boardVo.setBoardNum(boardNum);
 		BoardVO board = boardService.selectBoard(boardVo).get(0);
 		model.addAttribute("board", board);
-		return "board/viewBoard";
+		return "board/writeBoard";
+	}
+	
+	@PostMapping("/updateBoard")
+	public String updateBoard(Model model, BoardVO boardVo) {
+		log.info("특정 게시물을 수정합니다.");
+		boardService.updateBoard(boardVo);
+		List<BoardVO> boardList = boardService.selectBoard(null);
+		model.addAttribute("board", boardList);
+		return "board/board";
 	}
 	
 	@PostMapping("/deleteBoard")
