@@ -67,7 +67,7 @@
 				for(BoardVO board : boardList){
 					%>
 						<tr>
-			              <td><%=1%></td>
+			              <td><%=boardList.indexOf(board)+1%></td>
 			              <td>
 			              	<a href="<%=request.getContextPath()%>/board/viewBoard?boardNum=<%=board.getBoardNum()%>">
 			              		<%=board.getBoardWriter()%>
