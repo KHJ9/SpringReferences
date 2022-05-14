@@ -23,7 +23,7 @@
 	<div class="container">
         <h2>간이 게시판</h2>
         <p>작성란</p> 
-        <form id="writeForm" action="<%=request.getContextPath()%>/board/insertBoard" method="post">
+        <form id="writeForm" action="<%=request.getContextPath()%>/board/writeBoard" method="post">
 	        <div id="titleDiv" class="form-group">
 	            <label for="title">제목:</label>
 	            <input id="title" type="text" name="boardTitle" class="form-control" id="title">

@@ -51,12 +51,19 @@
 			const deleteBtn = document.querySelector("#deleteBtn");
 			const boardNum = '<%=board.getBoardNum()%>';
 			
+			updateBtn.onclick = location.href="<%=request.getContextPath()%>/board/updateBoard?boardNum=<%=board.getBoardNum()%>";
+			
 			deleteBtn.onclick = function(){
 				var formData = new FormData();
 				
 				formData.append('boardNum', boardNum);
 				var xml = new XMLHttpRequest();
 				xml.open("POST", "<%=request.getContextPath()%>/board/deleteBoard", true);
+				xml.onreadystatechange = function() {
+		            if(xml.readyState== 4 && xml.status == 200) { // 성공 시
+		                location.href="<%=request.getContextPath()%>/board/getBoard";
+		            }
+		        }
 				xml.send(formData);
 			}
 		</script>

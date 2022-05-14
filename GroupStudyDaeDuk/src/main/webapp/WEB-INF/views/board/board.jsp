@@ -103,7 +103,7 @@
 		const writeBtn = document.querySelector("#writeBtn");
 		
 		writeBtn.onclick = function(){
-			location.href = "<%=request.getContextPath()%>/board/getEditor";
+			location.href = "<%=request.getContextPath()%>/board/writeBoard";
 		}
     </script>
 </body>

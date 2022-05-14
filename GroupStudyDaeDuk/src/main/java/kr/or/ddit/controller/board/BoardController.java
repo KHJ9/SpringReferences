@@ -33,14 +33,14 @@ public class BoardController {
 		return "board/board";
 	}
 	
-	@GetMapping("/getEditor")
-	public String getEditor() {
+	@GetMapping("/writeBoard")
+	public String writeBoard() {
 		log.info("작성란으로 이동합니다.");
 		return "board/writeBoard";
 	}
 	
-	@PostMapping("/insertBoard")
-	public String insertBoard(Model model, BoardVO boardVo) {
+	@PostMapping("/writeBoard")
+	public String writeBoard(Model model, BoardVO boardVo) {
 		log.info("게시물을 작성합니다.");
 		boardService.insertBoard(boardVo);
 		List<BoardVO> boardList = boardService.selectBoard(null);
@@ -57,17 +57,14 @@ public class BoardController {
 		return "board/viewBoard";
 	}
 	
-	/*
-	@PostMapping("/updateBoard")
+	@GetMapping("/updateBoard")
 	public String updateBoard(Model model, String boardNum) {
 		log.info("특정 게시물을 수정합니다.");
 		boardVo.setBoardNum(boardNum);
-		boardService.deleteBoard(boardVo);
-		List<BoardVO> boardList = boardService.selectBoard(null);
-		model.addAttribute("board", boardList);
-		return "board/board";
+		BoardVO board = boardService.selectBoard(boardVo).get(0);
+		model.addAttribute("board", board);
+		return "board/viewBoard";
 	}
-	*/
 	
 	@PostMapping("/deleteBoard")
 	public String deleteBoard(Model model, String boardNum) {
