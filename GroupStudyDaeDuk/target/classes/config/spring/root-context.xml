@@ -2,8 +2,31 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
-		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+	
+	<!-- aop설정(그냥 이렇게 설정만 해주면 되며, 어노테이션으로 제어한다.) -->
+	<aop:aspectj-autoproxy/>
+	
+	<bean id="mailSender3"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.naver.com" />
+		<property name="port" value="465" />
+		<property name="username" value="flowerdisk9" />
+		<property name="password" value="rla931023" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<!-- <prop key="mail.smtp.starttls.enable">true</prop> --> <!-- log확인시   없어도 됨 -->
+				<prop key="mail.smtps.ssl.checkserveridentity">true</prop> <!--HELO or EHLO 사용 -->
+				<!-- <prop key="mail.smtps.ssl.trust">*</prop> -->
+				<prop key="mail.debug">true</prop>               <!-- 메일서버 접속내용 로그 출력 -->
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop> <!-- SSL 사용 -->
+			</props>
+		</property>
+	</bean>
 	
 	<!-- 이 root-context는 database-context를 참조한다. -->
 	<import resource="database-context.xml"/>

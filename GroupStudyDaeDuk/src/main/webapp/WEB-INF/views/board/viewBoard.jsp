@@ -1,3 +1,4 @@
+<%@page import="kr.or.ddit.domain.BoardVO"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -24,19 +25,22 @@
 	<div class="container">
         <h2>간이 게시판</h2>
         <p>게시글</p> 
+        <%
+	        BoardVO board = (BoardVO)request.getAttribute("board");
+        %>
         <table id="viewTable" class="table">
 		    <tbody>
 		    	<tr>
-			        <th class="col-md-2">제목</th>
-			        <td class="col-md-10">최종 프로젝트</td>
+			        <th style="width : 150px;">제목</th>
+			        <td><%=board.getBoardTitle()%></td>
 		      	</tr>
 			    <tr>
 			        <th>작성자</th>
-			        <td>김현준</td>
+			        <td><%=board.getBoardWriter()%></td>
 			    </tr>
 			    <tr>
 			        <th>내용</th>
-			        <td>빨리 취업하고 싶다.</td>
+			        <td><%=board.getBoardContent()%></td>
 			    </tr>
 		    </tbody>
 		</table>

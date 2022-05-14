@@ -36,7 +36,8 @@
 	<!-- Mybatis -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 	    <property name="dataSource" ref="dataSource"/>
-	    <!-- <property name="configLocation"></property> -->
+	   	<property name="configLocation" value="classpath:config/mybatisConfig.xml"></property>
+	    <property name="mapperLocations" value="classpath:kr/or/ddit/mapper/**/*-Mapper.xml"></property>
 	</bean>
 	
 	<!-- <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean> -->
@@ -51,6 +52,11 @@
 	<!-- 트랜잭션을 어노테이션으로 하겠음 -->
 	<tx:annotation-driven/>
 	
-	<context:component-scan base-package="kr.or.ddit.service"></context:component-scan>
+	<context:component-scan base-package="kr.or.ddit"/>
+	<!-- <context:component-scan base-package="kr.or.ddit.service"></context:component-scan>
+	<context:component-scan base-package="kr.or.ddit.service.board"></context:component-scan>
+	<context:component-scan base-package="kr.or.ddit.aop"></context:component-scan>
+	<context:component-scan base-package="kr.or.ddit.mapper"></context:component-scan>
+	<context:component-scan base-package="kr.or.ddit.mapper.board"></context:component-scan> -->
 
 </beans>

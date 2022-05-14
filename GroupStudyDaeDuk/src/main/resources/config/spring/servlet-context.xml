@@ -60,6 +60,7 @@
 		ref : 생성자 파라미터가 참조형 객체인 경우
 	</beans:bean>
 	 -->
+	 
 	<!-- <beans:bean id="jamba" class="kr.or.ddit.domain.Jamba">
 		<beans:property name="color" value="blue"/>
 		value : 프로퍼티에 값을 입력할 때 사용

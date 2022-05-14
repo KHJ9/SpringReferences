@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="kr.or.ddit.domain.BoardVO"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -60,21 +62,26 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>김현준</td>
-              <td>첫 게시글 이라능</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>홍길동</td>
-              <td>난 두번째라능</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>이순신</td>
-              <td>존버존버</td>
-            </tr>
+          	<%
+				List<BoardVO> boardList = (List<BoardVO>)request.getAttribute("board");
+				for(BoardVO board : boardList){
+					%>
+						<tr>
+			              <td><%=1%></td>
+			              <td>
+			              	<a href="<%=request.getContextPath()%>/board/viewBoard?boardNum=<%=board.getBoardNum()%>">
+			              		<%=board.getBoardWriter()%>
+		              		</a>
+	              		  </td>
+		              	  <td>
+			              	<a href="<%=request.getContextPath()%>/board/viewBoard?boardNum=<%=board.getBoardNum()%>">
+			              		<%=board.getBoardTitle()%>
+		              		</a>
+	              		  </td>
+			            </tr>	
+					<%
+				}
+			%>
           </tbody>
         </table>
         <ul class="pager">

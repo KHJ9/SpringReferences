@@ -21,6 +21,14 @@
 	<security:http auto-config="true" use-expressions="true">
 		<!-- <security:intercept-url pattern="/fbi/all" access="permitAll"/> -->
 		
+		<!-- iframe등의 요구는 기본 거절 -->
+		<security:headers>
+			<!-- 같은 ORIGIN인 경우 iframe의 요청을 허용한다. -->
+			<!-- <security:frame-options policy="SAMEORIGIN"/> -->
+			
+			<!-- iframe의 접근을 허용 -->
+			<security:frame-options disabled="true"/>
+		</security:headers>
 		<!-- /fbi/member => 해당 url로 들어가면 컨트롤러가 페이지를 표시하기 이전에 로그인 페이지를 중간에 표시한다. -->
 		<security:intercept-url pattern="/fbi/admin" access="hasRole('ROLE_ADMIN')"/>
 		<security:intercept-url pattern="/fbi/member" access="hasRole('ROLE_MEMBER')"/>

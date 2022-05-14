@@ -1,6 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,16 +23,17 @@
 	<div class="container">
         <h2>간이 게시판</h2>
         <p>작성란</p> 
-        <form id="writeForm" onsubmit="<%=request.getContextPath()%>/board/doWrite" method="post">
+        <form id="writeForm" action="<%=request.getContextPath()%>/board/insertBoard" method="post">
 	        <div id="titleDiv" class="form-group">
 	            <label for="title">제목:</label>
-	            <input id="title" type="text" class="form-control" id="title">
+	            <input id="title" type="text" name="boardTitle" class="form-control" id="title">
 	        </div>
 			<div id="contentDiv" class="form-group">
 				<label for="content">내용:</label>
-				<textarea class="form-control" rows="5" id="content"></textarea>
+				<textarea class="form-control" name="boardContent" rows="5" id="content"></textarea>
 			</div>
-			<button id="writeBtn" type="button" class="btn btn-success">글쓰기</button>
+			<input type="hidden" name="boardWriter" value="<sec:authentication property="principal.username"/>">
+			<button id="writeBtn" type="submit" class="btn btn-success">글쓰기</button>
 		</form>
     </div>
 </body>

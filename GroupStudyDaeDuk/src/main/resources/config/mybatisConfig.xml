@@ -3,6 +3,7 @@
 <configuration>
 	<typeAliases>
 		<!-- 패키지 위치 지정 -->
+		<typeAlias type="kr.or.ddit.domain.BoardVO" alias="boardVO"/>
 		<typeAlias type="kr.or.ddit.domain.MemberVO" alias="memberVO"/>
 		<typeAlias type="kr.or.ddit.domain.AuthVO" alias="authVO"/>
 	</typeAliases>

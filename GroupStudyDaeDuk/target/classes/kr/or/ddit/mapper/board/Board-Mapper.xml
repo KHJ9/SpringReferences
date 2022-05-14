@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.board.BoardMapper">
+	<resultMap type="boardVO" id="boardMap">
+		<id property="boardNum" column="BOARD_NUM"/> <!-- PK -->
+		<result property="boardNum" column="BOARD_NUM"/>
+		<result property="boardWriter" column="WRITER"/>
+		<result property="boardTitle" column="TITLE"/>
+		<result property="boardContent" column="CONTENT"/>
+		<result property="createDate" column="CREATE_DATE"/>
+	</resultMap>
+	
+	<insert id="insert" parameterType="boardVO">
+		<selectKey keyProperty="boardNum" resultType="String" order="BEFORE">
+			SELECT 'b' || LPAD(P_BOARD_SEQ.NEXTVAL, '5', '0') FROM DUAL
+		</selectKey>
+	
+		INSERT INTO 
+		P_BOARD
+		(BOARD_NUM, WRITER, TITLE, CONTENT, CREATE_DATE)
+		VALUES
+		(#{boardNum}, #{boardWriter}, #{boardTitle}, #{boardContent}, SYSDATE)
+	</insert>
+	
+	<select id="select" parameterType="boardVO" resultMap="boardMap">
+		SELECT * FROM P_BOARD
+		WHERE 1 = 1 
+		<choose>
+		    <when test="boardNum != null">
+		        AND BOARD_NUM = #{boardNum}
+		    </when>
+		    <otherwise>
+		    </otherwise>
+		</choose>
+	</select>
+	
+	<update id="update" parameterType="boardVO">
+		UPDATE P_BOARD SET
+		TITLE = #{boardTitle},
+		CONTENT = #{boardContent}
+		WHERE BOARD_NUM = #{boardNum}
+	</update>
+	
+	<delete id="delete" parameterType="boardVO">
+		DELETE FROM P_BOARD
+		WHERE BOARD_NUM = #{boardNum}
+	</delete>
+
+</mapper>
