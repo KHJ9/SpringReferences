@@ -57,4 +57,26 @@ public class BoardController {
 		return "board/viewBoard";
 	}
 	
+	/*
+	@PostMapping("/updateBoard")
+	public String updateBoard(Model model, String boardNum) {
+		log.info("특정 게시물을 수정합니다.");
+		boardVo.setBoardNum(boardNum);
+		boardService.deleteBoard(boardVo);
+		List<BoardVO> boardList = boardService.selectBoard(null);
+		model.addAttribute("board", boardList);
+		return "board/board";
+	}
+	*/
+	
+	@PostMapping("/deleteBoard")
+	public String deleteBoard(Model model, String boardNum) {
+		log.info("특정 게시물을 삭제합니다.");
+		boardVo.setBoardNum(boardNum);
+		boardService.deleteBoard(boardVo);
+		List<BoardVO> boardList = boardService.selectBoard(null);
+		model.addAttribute("board", boardList);
+		return "board/board";
+	}
+	
 }

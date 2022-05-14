@@ -25,9 +25,7 @@
 	<div class="container">
         <h2>간이 게시판</h2>
         <p>게시글</p> 
-        <%
-	        BoardVO board = (BoardVO)request.getAttribute("board");
-        %>
+        <% BoardVO board = (BoardVO)request.getAttribute("board"); %>
         <table id="viewTable" class="table">
 		    <tbody>
 		    	<tr>
@@ -48,6 +46,20 @@
 			<button id="updateBtn" type="button" class="btn btn-primary">수정</button>
 			<button id="deleteBtn" type="button" class="btn btn-danger">삭제</button>
 		</div>
+		<script>
+			const updateBtn = document.querySelector("#updateBtn");
+			const deleteBtn = document.querySelector("#deleteBtn");
+			const boardNum = '<%=board.getBoardNum()%>';
+			
+			deleteBtn.onclick = function(){
+				var formData = new FormData();
+				
+				formData.append('boardNum', boardNum);
+				var xml = new XMLHttpRequest();
+				xml.open("POST", "<%=request.getContextPath()%>/board/deleteBoard", true);
+				xml.send(formData);
+			}
+		</script>
     </div>
 </body>
 </html>
