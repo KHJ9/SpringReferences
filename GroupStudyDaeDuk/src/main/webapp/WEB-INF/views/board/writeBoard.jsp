@@ -12,10 +12,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
 	<style>
 		.container {
-            padding-top : 100px;
+            padding-top : 60px;
         }
         
-        #writeBtn, #updateBtn {
+        #btns {
+        	display : inline-block;
             float : right;
         }
 	</style>    
@@ -38,19 +39,43 @@
 			<input type="hidden" name="boardWriter" value="<sec:authentication property="principal.username"/>">
 			<input type="hidden" name="boardNum" 
 				value="<%if(board!=null){out.print(board.getBoardNum());}%>">
-			<% if(board==null) { %>
-				<button id="writeBtn" type="submit" class="btn btn-success">글쓰기</button>
-			<% } else { %>
-				<button id="updateBtn" type="submit" class="btn btn-primary">수정</button>
-			<% } %>
+			<div id="btns">
+				<% if(board==null) { %>
+					<button id="writeBtn" type="submit" class="btn btn-success">글쓰기</button>
+				<% } else { %>
+					<button id="updateBtn" type="submit" class="btn btn-primary">수정</button>
+				<% } %>
+					<button id="listBtn" type="button" class="btn btn-info">목록</button>
+			</div>
 		</form>
 		<script>
 			const writeForm = document.querySelector("#writeForm");
+			const listBtn = document.querySelector("#listBtn");
+			const title = document.querySelector("#title");
+			const content = document.querySelector("#content");
 			<% if(board==null) { %>
 				writeForm.action="<%=request.getContextPath()%>/board/writeBoard";
+				writeForm.onsubmit = function(){
+					if(title.value == "" || content.value == ""){
+						alert("양식을 모두 기입해야 합니다.");
+						return false;
+					}
+					alert("게시글 작성 완료!");
+				}
 			<% } else { %>
 				writeForm.action="<%=request.getContextPath()%>/board/updateBoard";
+				writeForm.onsubmit = function(){
+					if(title.value == "" || content.value == ""){
+						alert("양식을 모두 기입해야 합니다.");
+						return false;
+					}
+					alert("게시글 수정 완료!");
+				}
 			<% } %>
+			
+			listBtn.onclick = function(){
+				location.href="<%=request.getContextPath()%>/board/getBoard";
+			}
 		</script>
     </div>
 </body>

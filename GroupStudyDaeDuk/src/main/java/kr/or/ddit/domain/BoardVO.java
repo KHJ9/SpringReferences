@@ -19,6 +19,10 @@ import lombok.ToString;
 @Component("board")
 public class BoardVO {
 	
+	private int boardRowNum;
+	private int currentPageNum = 1;
+	private int totalPageNum;
+	private String searchText;
 	private String boardNum;
 	private String boardWriter;
 	private String boardTitle;

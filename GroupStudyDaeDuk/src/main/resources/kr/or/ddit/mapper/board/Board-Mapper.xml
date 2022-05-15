@@ -3,6 +3,10 @@
 <mapper namespace="kr.or.ddit.mapper.board.BoardMapper">
 	<resultMap type="boardVO" id="boardMap">
 		<id property="boardNum" column="BOARD_NUM"/> <!-- PK -->
+		<result property="boardRowNum" column="BOARD_ROW_NUM"/>
+		<result property="currentPageNum" column="CUR_PAGE_NUM"/>
+		<result property="totalPageNum" column="TOT_PAGE_NUM"/>
+		<result property="searchText" column="SEARCH_TEXT"/>
 		<result property="boardNum" column="BOARD_NUM"/>
 		<result property="boardWriter" column="WRITER"/>
 		<result property="boardTitle" column="TITLE"/>
@@ -23,15 +27,50 @@
 	</insert>
 	
 	<select id="select" parameterType="boardVO" resultMap="boardMap">
-		SELECT * FROM P_BOARD
-		WHERE 1 = 1 
-		<choose>
-		    <when test="boardNum != null">
-		        AND BOARD_NUM = #{boardNum}
-		    </when>
-		    <otherwise>
-		    </otherwise>
-		</choose>
+		SELECT * FROM (
+			SELECT 
+				ROW_NUMBER() OVER(ORDER BY BOARD_NUM ASC) AS BOARD_ROW_NUM,
+				ROW_NUMBER() OVER(ORDER BY BOARD_NUM DESC)-1 AS NUM,
+				CUR_PAGE_NUM,
+				TOT_PAGE_NUM,
+				SEARCH_TEXT,
+				P_BOARD.*
+			FROM P_BOARD
+			<choose>
+			    <when test="currentPageNum != null">
+			        ,(SELECT #{currentPageNum} AS CUR_PAGE_NUM FROM DUAL)
+			    </when>
+			    <otherwise>
+			    	,(SELECT 1 AS CUR_PAGE_NUM FROM DUAL)
+			    </otherwise>
+			</choose>
+			<choose>
+			    <when test="searchText != null">
+			        ,(SELECT '${searchText}' AS SEARCH_TEXT FROM DUAL)
+			        ,(SELECT CEIL(COUNT(*)/10) AS TOT_PAGE_NUM 
+			    	  FROM P_BOARD
+			    	  WHERE TITLE LIKE '%${searchText}%')
+			    </when>
+			    <otherwise>
+			        ,(SELECT NULL AS SEARCH_TEXT FROM DUAL)
+			        ,(SELECT CEIL(COUNT(*)/10) AS TOT_PAGE_NUM 
+			    	  FROM P_BOARD)
+			    </otherwise>
+			</choose>
+			WHERE 1 = 1
+			<choose>
+			    <when test="boardNum != null">
+			        AND BOARD_NUM = #{boardNum}
+			    </when>
+			</choose>
+			<choose>
+			    <when test="searchText != null">
+			        AND TITLE LIKE '%${searchText}%'
+			    </when>
+			</choose>
+		) WHERE NUM BETWEEN 
+			((CUR_PAGE_NUM-1)*5) AND 
+			((CUR_PAGE_NUM-1)*5)+10-1
 	</select>
 	
 	<update id="update" parameterType="boardVO">

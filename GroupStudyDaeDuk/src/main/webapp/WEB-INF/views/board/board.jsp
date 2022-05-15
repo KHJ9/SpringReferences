@@ -13,7 +13,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
     <style>
         .container {
-            padding-top : 100px;
+            padding-top : 60px;
         }
 
         .table {
@@ -43,31 +43,31 @@
     </style>
 </head>
 <body>
+	<% List<BoardVO> boardList = (List<BoardVO>)request.getAttribute("board"); %>
 	<div class="container">
         <h2>간이 게시판</h2>
         <p>나중에 참고할 간이용 게시판</p> 
         
         <div id="searchDiv" class="form-group">
             <label for="usr">검색:</label>
-            <input id="searchInput" type="text" class="form-control" id="usr">
+            <input id="searchInput" type="text" class="form-control">
             <button id="searchBtn" type="button" class="btn btn-primary">검색</button>
         </div>
 
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>번호</th>
-              <th>작성자</th>
+              <th style="width:20%;">번호</th>
+              <th style="width:20%;">작성자</th>
               <th>제목</th>
             </tr>
           </thead>
           <tbody>
           	<%
-				List<BoardVO> boardList = (List<BoardVO>)request.getAttribute("board");
 				for(BoardVO board : boardList){
 					%>
 						<tr>
-			              <td><%=boardList.indexOf(board)+1%></td>
+			              <td><%=board.getBoardRowNum()%></td>
 			              <td>
 			              	<a href="<%=request.getContextPath()%>/board/viewBoard?boardNum=<%=board.getBoardNum()%>">
 			              		<%=board.getBoardWriter()%>
@@ -85,22 +85,90 @@
           </tbody>
         </table>
         <ul class="pager">
-            <li><a href="#">Previous</a></li> 
+        	<% 
+	        	String searchText = null; 
+        		if(boardList.size() != 0) {
+	        		BoardVO board = boardList.get(0);
+	        		searchText = board.getSearchText();
+	        		int cur = board.getCurrentPageNum();
+	        		int tot = board.getTotalPageNum(); 
+	        		int page_area = 5;
+	        		int page_start = 1;
+	        		int page_end = page_start + page_area - 1;
+	        		
+	        		while(cur - page_start > page_area - 1){
+	        			page_start += page_area;
+	        			page_end = page_start + page_area - 1;
+	        		}
+	        		
+	        		if(page_end > tot) page_end = tot;
+	        		if(page_start != 1){
+	        			%>
+	        				<li>
+	        					<a href="<%=request.getContextPath()%>/board/getBoard?currentPageNum=<%=page_start-1%>&searchText=<%if(searchText != null) out.print(searchText);%>">
+	        						Previous
+	       						</a>
+	     					</li>
+	    				<%
+	        		}
+        	%>
             <li>
 	            <ul class="pagination pagination-sm">
-	                <li><a href="#">1</a></li>
-	                <li><a href="#">2</a></li>
-	                <li><a href="#">3</a></li>
-	                <li class="disabled"><a href="#">4</a></li>
-	                <li><a href="#">5</a></li>
+	                <%
+	                	for(int i=page_start; i<=page_end; i++) {
+	                		if(i == cur) {
+	                %>
+				                <li class="disabled">
+				                	<a href="#">
+				                		<%=i%>
+			                		</a>
+			                	</li>
+	                <%
+	                		} else {
+             		%>
+	                			<li>
+	                				<a href="<%=request.getContextPath()%>/board/getBoard?currentPageNum=<%=i%>&searchText=<%if(searchText != null) out.print(searchText);%>">
+	                					<%=i%>
+                					</a>
+                				</li>
+	                <%
+	                		}
+	                	}
+	                %>
 	            </ul>
             </li>
-            <li><a href="#">Next</a></li>
+            <%
+		            if(tot - page_start >= page_area){
+	        			%>
+	        				<li>
+	        					<a href="<%=request.getContextPath()%>/board/getBoard?currentPageNum=<%=page_end+1%>&searchText=<%if(searchText != null) out.print(searchText);%>">
+	        						Next
+	        					</a>
+	        				</li>
+	        			<%
+	        		}
+        		}
+        	%>
             <li><button id="writeBtn" type="button" class="btn btn-success">글쓰기</button></li>
         </ul>
     </div>
     <script>
+		const searchInput = document.querySelector("#searchInput");
+		const searchBtn = document.querySelector("#searchBtn");
 		const writeBtn = document.querySelector("#writeBtn");
+		if(<%=searchText%> != "null")
+			searchInput.value = <%=searchText%>;	
+		
+		searchInput.onkeypress = function(){
+			if(event.code == "Enter"){
+				searchBtn.click();
+			}
+		}
+			
+		searchBtn.onclick = function(){
+			var searchText = searchInput.value;
+			location.href = "<%=request.getContextPath()%>/board/getBoard?searchText="+searchText;
+		}
 		
 		writeBtn.onclick = function(){
 			location.href = "<%=request.getContextPath()%>/board/writeBoard";

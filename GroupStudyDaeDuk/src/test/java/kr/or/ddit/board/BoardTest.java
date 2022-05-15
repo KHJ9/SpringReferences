@@ -24,26 +24,29 @@ public class BoardTest {
 	@Disabled
 	public void insertTest() {
 		
-		// 여기 Test할 때는 VO를 autowired하면 자동으로 객체가 생성되지 않는 것 같다.
-		BoardVO boardVo = new BoardVO();
-		
-		boardVo.setBoardWriter("작성자1");
-		boardVo.setBoardTitle("제목1");
-		boardVo.setBoardContent("내용1");
-		
-		log.info("insert : " + boardService.insertBoard(boardVo));
+		for(int i=1; i<200; i++) {
+			// 여기 Test할 때는 VO를 autowired하면 자동으로 객체가 생성되지 않는 것 같다.
+			BoardVO boardVo = new BoardVO();
+			
+			boardVo.setBoardWriter("작성자"+i);
+			boardVo.setBoardTitle("제목"+i);
+			boardVo.setBoardContent("내용"+i);
+			
+			log.info("insert : " + boardService.insertBoard(boardVo));
+		}
 	}
 	
 	@Test
-	@Disabled
+	//@Disabled
 	public void selectTest() {
 		
 		// 여기 Test할 때는 VO를 autowired하면 자동으로 객체가 생성되지 않는 것 같다.
 		BoardVO boardVo = new BoardVO();
 		
-		boardVo.setBoardNum("b00007");
-		
+		//boardVo.setCurrentPageNum(3);
+		boardVo.setSearchText("2");
 		log.info("select : " + boardService.selectBoard(boardVo));
+		//log.info("select : " + boardService.selectBoard(null));
 	}
 	
 	@Test

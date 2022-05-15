@@ -31,6 +31,19 @@ public class PasswordEncoderTest {
 		
 		String mySQL = "INSERT INTO USERS(USERID, USERNAME, PASSWORD) VALUES(?, ?, ?)";
 		
+		Connection conn = dataSource.getConnection();
+		PreparedStatement psmt = conn.prepareStatement(mySQL);
+		psmt.setNString(1, "blue");
+		psmt.setNString(2, "blue");
+		// USERPW : 암호화된 값을 넣어야 한다.
+		// USERPW : 암호화된 값을 넣어야 한다.
+		psmt.setNString(3, passwordEncoder.encode("blue")); 
+		psmt.executeUpdate();
+		
+		psmt.close(); // 닫기
+		conn.close(); // 닫기
+		
+		/*
 		for(int i=1; i<=20; i++) {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement psmt = conn.prepareStatement(mySQL);
@@ -44,14 +57,24 @@ public class PasswordEncoderTest {
 			psmt.close(); // 닫기
 			conn.close(); // 닫기
 		}
+		*/
 	}
 	
 	@Test
-	@Disabled
 	public void myTest2() throws Exception {
 		
 		String mySQL = "INSERT INTO AUTHORITIES(USERID, AUTHORITY) VALUES(?, ?)";
 		
+		Connection conn = dataSource.getConnection();
+		PreparedStatement psmt = conn.prepareStatement(mySQL);
+		psmt.setNString(1, "blue");
+		psmt.setNString(2, "ROLE_BLUE"); 
+		psmt.executeUpdate();
+		
+		psmt.close(); // 닫기
+		conn.close(); // 닫기
+		
+		/*
 		for(int i=1; i<=20; i++) {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement psmt = conn.prepareStatement(mySQL);
@@ -62,6 +85,7 @@ public class PasswordEncoderTest {
 			psmt.close(); // 닫기
 			conn.close(); // 닫기
 		}
+		*/
 	}
 	
 }
