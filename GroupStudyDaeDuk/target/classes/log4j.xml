@@ -12,7 +12,7 @@
 	
 	<!-- Application Loggers -->
 	<logger name="kr.or.ddit">
-		<level value="info" />
+		<level value="info" /> 
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
