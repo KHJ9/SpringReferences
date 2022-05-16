@@ -34,7 +34,7 @@ public class BoardController {
 		List<BoardVO> boardList = boardService.selectBoard(boardVo);
 		System.out.println(boardList.size());
 		model.addAttribute("board", boardList);
-		return "board/board";
+		return "board/board"; 
 	}
 	
 	@GetMapping("/writeBoard")
