@@ -34,7 +34,7 @@
 	 -->
 
 	<!-- 첨부파일 기능을 위한 선언 -->	
-	<!-- <beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" /> -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
 	
 	<!-- 주소 추가 -->
 	<!-- HyunJun hyunjun = new HyunJun(); -->
