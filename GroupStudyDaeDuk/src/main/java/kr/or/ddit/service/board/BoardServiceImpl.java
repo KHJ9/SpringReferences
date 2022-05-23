@@ -6,11 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.domain.BoardVO;
+import kr.or.ddit.domain.PageDTO;
 import kr.or.ddit.mapper.board.BoardMapper;
+import kr.or.ddit.mapper.board.PageMapper;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 
+	@Autowired
+	PageMapper pageMapper;
+	
 	@Autowired
 	BoardMapper boardMapper;
 	
@@ -21,9 +26,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardVO> selectBoard(BoardVO board) {
+	public List<BoardVO> selectBoard(PageDTO page, BoardVO board) {
 		// TODO Auto-generated method stub
-		return boardMapper.select(board);
+		if(page == null) { page = new PageDTO(); }
+		List<PageDTO> param = pageMapper.select(page);
+		boardMapper.select(board);
+		return null;
 	}
 
 	@Override

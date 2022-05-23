@@ -37,7 +37,7 @@ public class BoardTest {
 	}
 	
 	@Test
-	//@Disabled
+	@Disabled
 	public void selectTest() {
 		
 		// 여기 Test할 때는 VO를 autowired하면 자동으로 객체가 생성되지 않는 것 같다.
@@ -45,7 +45,7 @@ public class BoardTest {
 		
 		//boardVo.setCurrentPageNum(3);
 		boardVo.setSearchText("2");
-		log.info("select : " + boardService.selectBoard(boardVo));
+		log.info("select : " + boardService.selectBoard(null, boardVo));
 		//log.info("select : " + boardService.selectBoard(null));
 	}
 	

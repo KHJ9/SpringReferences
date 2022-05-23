@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.board.PageMapper">
+
+	<select id="select" parameterType="pageDTO" resultType="pageDTO">
+		SELECT * FROM (
+			SELECT 
+				ROW_NUMBER() OVER(ORDER BY ${pkName} ASC) AS ROW_NUM,
+				CUR_PAGE_NUM,
+				TOT_PAGE_NUM,
+				SEARCH_TEXT,
+				${tableName}.${pkName} AS PK_NUM
+			FROM ${tableName}
+			<choose>
+			    <when test="curPageNum != null">
+			        ,(SELECT #{curPageNum} AS CUR_PAGE_NUM FROM DUAL)
+			    </when>
+			    <otherwise>
+			    	,(SELECT 1 AS CUR_PAGE_NUM FROM DUAL)
+			    </otherwise>
+			</choose>
+			<choose>
+			    <when test="searchText != null">
+			        ,(SELECT '${searchText}' AS SEARCH_TEXT FROM DUAL)
+			        ,(SELECT CEIL(COUNT(*)/10) AS TOT_PAGE_NUM 
+			    	  FROM ${tableName}
+			    	  WHERE TITLE LIKE '%${searchText}%')
+			    </when>
+			    <otherwise>
+			        ,(SELECT NULL AS SEARCH_TEXT FROM DUAL)
+			        ,(SELECT CEIL(COUNT(*)/10) AS TOT_PAGE_NUM 
+			    	  FROM ${tableName})
+			    </otherwise>
+			</choose>
+			WHERE 1 = 1
+			<choose>
+			    <when test="searchText != null">
+			        AND TITLE LIKE '%${searchText}%'
+			    </when>
+			</choose>
+		) WHERE ROW_NUM BETWEEN 
+			((CUR_PAGE_NUM-1)*5) AND 
+			((CUR_PAGE_NUM-1)*5)+5-1
+	</select>
+
+</mapper>

@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
+	<settings>
+		<!-- 테이블 컬럼명을 스네이크 케이스에서 카멜 케이스로 변경하여 vo 프로퍼티와 일치시킨다. -->
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
 	<typeAliases>
 		<!-- 패키지 위치 지정 -->
+		<typeAlias type="kr.or.ddit.domain.PageDTO" alias="pageDTO"/>
 		<typeAlias type="kr.or.ddit.domain.BoardVO" alias="boardVO"/>
+		<typeAlias type="kr.or.ddit.domain.ReplyVO" alias="replyVO"/>
 		<typeAlias type="kr.or.ddit.domain.MemberVO" alias="memberVO"/>
 		<typeAlias type="kr.or.ddit.domain.AuthVO" alias="authVO"/>
 	</typeAliases>

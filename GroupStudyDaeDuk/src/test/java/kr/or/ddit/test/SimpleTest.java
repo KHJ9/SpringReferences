@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import javax.sql.DataSource;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class SimpleTest {
 	DataSource dataSource;
 	
 	@Test
+	@Disabled
 	public void myTest() throws Exception {
 		// assert : ~이어야 한다.
 		// assertNotNull : null이 아니어야 한다.

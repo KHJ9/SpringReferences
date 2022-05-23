@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.board.ReplyMapper">
+	
+	
+	<insert id="insert" parameterType="replyVO">
+		<selectKey keyProperty="replyNum" resultType="String" order="BEFORE">
+			SELECT 'b' || LPAD(P_REPLY_SEQ.NEXTVAL, '5', '0') FROM DUAL
+		</selectKey>
+		INSERT INTO 
+		P_REPLY
+		(REPLY_NUM, BOARD_NUM, REPLY_WRITER, REPLY_CONTENT)
+		VALUES
+		(#{replyNum}, #{boardNum}, #{replyWriter}, #{replyContent})
+	</insert>
+	
+	<select id="select" parameterType="replyVO" resultType="replyVO">
+		SELECT 
+			REPLY_NUM,
+			BOARD_NUM,
+			REPLY_WRITER,
+			REPLY_CONTENT,
+			CREATE_DATE,
+			UPDATE_DATE
+		FROM P_REPLY
+		WHERE BOARD_NUM = #{boardNum}
+		ORDER BY REPLY_NUM DESC
+	</select>
+	
+	<update id="update" parameterType="replyVO">
+		UPDATE P_REPLY SET
+		REPLY_CONTENT = #{replyContent},
+		UPDATE_DATE = SYSDATE
+		WHERE REPLY_NUM = #{replyNum}
+	</update>
+	
+	<delete id="delete" parameterType="replyVO">
+		DELETE FROM P_REPLY
+		WHERE REPLY_NUM = #{replyNum}
+	</delete>
+	
+</mapper>

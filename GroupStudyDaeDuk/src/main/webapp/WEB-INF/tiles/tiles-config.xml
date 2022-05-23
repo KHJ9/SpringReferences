@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+	"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<!-- tiles 설정 -->
+<tiles-definitions>
+   <!-- main layout -->
+   <definition name="tiles-layout" template="/WEB-INF/views/tiles/index.jsp"> <!-- index가 기본틀이라는? -->
+      <put-attribute name="dynamic_css" value="/WEB-INF/tiles/css/common.jsp" />
+      <put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
+      <put-attribute name="aside" value="/WEB-INF/views/tiles/aside.jsp" />
+      <put-attribute name="body" value="" />
+      <put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp" />
+   </definition>
+
+   <definition name="*/*" extends="tiles-layout">
+      <!-- name에서 볼 수 있듯이 */*는 아래 body의 value에서 1,2에 해당하며controller에서 1,2를 설정한다. -->
+      <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
+      <put-attribute name="title" value="tiles" />
+   </definition>
+   <definition name="*.tiles" extends="tiles-layout">
+      <!-- name에서 볼 수 있듯이 */*는 아래 body의 value에서 1,2에 해당하며controller에서 1,2를 설정한다. -->
+      <put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
+      <put-attribute name="title" value="tiles" />
+   </definition>
+</tiles-definitions>

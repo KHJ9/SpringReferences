@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+#header {
+	margin-left : 100px;
+	width : calc(100% - 100px);
+	height : 100px;
+	background-color : lightgray;
+}
+
+#aside {
+	position : fixed;
+	width : 100px;
+	height : 100vh;
+	background-color : skyblue;
+	float : left;
+}
+
+#body {
+	background-color : white;
+	height : 100%;
+}
+
+#footer {
+	width : 100%;
+	height : 100px;
+	background-color : lightgray;
+}

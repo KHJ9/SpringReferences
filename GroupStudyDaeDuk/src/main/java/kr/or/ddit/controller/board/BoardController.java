@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.BoardVO;
+import kr.or.ddit.domain.PageDTO;
 import kr.or.ddit.service.board.BoardService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,9 +30,9 @@ public class BoardController {
 	BoardService boardService;
 	
 	@GetMapping("/getBoard")
-	public String getBoard(Model model, BoardVO boardVo) {
+	public String getBoard(Model model, BoardVO boardVo, PageDTO pageDto) {
 		log.info("게시판을 출력합니다.");
-		List<BoardVO> boardList = boardService.selectBoard(boardVo);
+		List<BoardVO> boardList = boardService.selectBoard(pageDto, boardVo);
 		System.out.println(boardList.size());
 		model.addAttribute("board", boardList);
 		return "board/board"; 
@@ -54,7 +55,7 @@ public class BoardController {
 	public String viewBoard(Model model, String boardNum) {
 		log.info("특정 게시물을 조회합니다.");
 		boardVo.setBoardNum(boardNum);
-		BoardVO board = boardService.selectBoard(boardVo).get(0);
+		BoardVO board = boardService.selectBoard(null, boardVo).get(0);
 		model.addAttribute("board", board);
 		return "board/viewBoard";
 	}
@@ -63,7 +64,7 @@ public class BoardController {
 	public String updateBoard(Model model, String boardNum) {
 		log.info("게시물을 수정란으로 이동합니다.");
 		boardVo.setBoardNum(boardNum);
-		BoardVO board = boardService.selectBoard(boardVo).get(0);
+		BoardVO board = boardService.selectBoard(null, boardVo).get(0);
 		model.addAttribute("board", board);
 		return "board/writeBoard";
 	}
@@ -81,7 +82,7 @@ public class BoardController {
 		log.info("특정 게시물을 삭제합니다.");
 		boardVo.setBoardNum(boardNum);
 		boardService.deleteBoard(boardVo);
-		List<BoardVO> boardList = boardService.selectBoard(null);
+		List<BoardVO> boardList = boardService.selectBoard(null, null);
 		model.addAttribute("board", boardList);
 		return "게시글 삭제 완료!";
 	}

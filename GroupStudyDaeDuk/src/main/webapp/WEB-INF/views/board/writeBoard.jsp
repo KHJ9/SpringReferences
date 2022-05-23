@@ -19,6 +19,10 @@
         	display : inline-block;
             float : right;
         }
+        
+        textarea {
+        	resize: none;
+        }
 	</style>    
 </head>
 <body>
