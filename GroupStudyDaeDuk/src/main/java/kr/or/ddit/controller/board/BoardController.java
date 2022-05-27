@@ -34,7 +34,7 @@ public class BoardController {
 		log.info("게시판을 출력합니다.");
 		List<BoardVO> boardList = boardService.selectBoard(pageDto, boardVo);
 		System.out.println(boardList.size());
-		model.addAttribute("board", boardList);
+		model.addAttribute("board", boardList); 
 		return "board/board"; 
 	}
 	
